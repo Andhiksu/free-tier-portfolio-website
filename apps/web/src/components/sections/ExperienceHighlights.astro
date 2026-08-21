@@ -40,7 +40,7 @@ const displayRecords =
         summary: record.summary[locale],
         dateLabel: [formatDate(record.startDate), formatDate(record.endDate)]
           .filter(Boolean)
-          .join(" — "),
+          .join(": "),
         gallery: record.gallery[locale].slice(0, 3),
       }))
     : data.chapters.map((chapter, index) => ({

@@ -659,7 +659,7 @@ a:hover {
   grid-area: perspective;
 }
 
-/* Home view — accepted focal composition */
+/* Home view: accepted focal composition */
 .hero-section {
   display: grid;
   min-width: 0;

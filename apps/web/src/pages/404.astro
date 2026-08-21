@@ -8,7 +8,7 @@ const recoveryLinks = getRecoveryLinks("en");
 <BaseLayout
   metadata={{
     locale: "en",
-    title: "Page not found — Portfolio Owner",
+    title: "Page not found: Portfolio Owner",
     description:
       "The requested page is unavailable. Return to the English homepage or explore the public project directions.",
     indexable: false,
@@ -67,7 +67,7 @@ const recoveryLinks = getRecoveryLinks("en");
     const projectsLink = page.querySelector("[data-error-projects]");
 
     document.documentElement.lang = "id";
-    document.title = "Halaman tidak ditemukan — Portfolio Owner";
+    document.title = "Halaman tidak ditemukan: Portfolio Owner";
 
     if (heading instanceof HTMLElement) {
       heading.textContent = "Halaman tidak ditemukan";

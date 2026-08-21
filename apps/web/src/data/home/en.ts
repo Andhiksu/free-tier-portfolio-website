@@ -7,7 +7,7 @@ import { getProjectPreviews } from "../projects.ts";
 
 export const enHomeData: HomePageData = {
   lang: "en",
-  title: "Portfolio Owner — Data & Applied AI Portfolio",
+  title: "Portfolio Owner: Data & Applied AI Portfolio",
   description:
     "Explore Portfolio Owner’s portfolio direction across data, business intelligence, data science, and applied AI.",
   indexable: true,
@@ -204,6 +204,6 @@ export const enHomeData: HomePageData = {
     ],
   },
   footer: {
-    copy: "Portfolio Owner — Data, analytics, and applied AI.",
+    copy: "Portfolio Owner: Data, analytics, and applied AI.",
   },
 };

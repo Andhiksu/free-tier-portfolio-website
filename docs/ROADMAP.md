@@ -27,7 +27,7 @@ validated published-only CMS boundary, and exact human gates unless an accepted 
 
 ## Completed foundation
 
-### Phase 0 — Repository and product definition
+### Phase 0: Repository and product definition
 
 Outcome: the product scope, bilingual direction, privacy posture, technology defaults, content
 inventories, and decision process were established.
@@ -38,7 +38,7 @@ Exit evidence:
 - Node/pnpm and workspace contracts are explicit;
 - candidate content and media are separated from publication approval.
 
-### Phase 1 — Static workspace foundation
+### Phase 1: Static workspace foundation
 
 Outcome: a pnpm workspace and strict static Astro application were created with initial English and
 Indonesian routes, shared styling, and quality scripts.
@@ -49,7 +49,7 @@ Exit evidence:
 - route and locale foundations exist;
 - format, lint, type, and test checks are available.
 
-### Phase 2 — Bilingual portfolio MVP
+### Phase 2: Bilingual portfolio MVP
 
 Outcome: the homepage, About, Experience, Projects, Credentials, Contact context, theme controls,
 responsive layout, and safe placeholder/fallback content became a coherent MVP.
@@ -60,7 +60,7 @@ Exit evidence:
 - unsupported claims and private data are not used;
 - keyboard, focus, responsive, dark-theme, and reduced-motion behavior are verified.
 
-### Phase 3 — Spatial routes and project system
+### Phase 3: Spatial routes and project system
 
 Outcome: the focused spatial visual system, dedicated Project archive/detail routes, centralized
 metadata, sitemap, localized routing, and recovery page were established.
@@ -72,7 +72,7 @@ Exit evidence:
 - no-JavaScript content remains meaningful;
 - route/metadata tests and browser QA pass.
 
-### Phase 4 — Sanity CMS architecture
+### Phase 4: Sanity CMS architecture
 
 Outcome: a standalone Studio, bounded schemas, published-only queries, typed runtime validation,
 adapters, safe fallback, and guarded content tooling were integrated without converting Astro to a
@@ -86,7 +86,7 @@ Exit evidence:
 - invalid/missing CMS data fails safely;
 - publication metadata and asset boundaries are enforced.
 
-### Phase 5 — Verified real-content migration
+### Phase 5: Verified real-content migration
 
 Outcome: approved bilingual content, Projects, Experience, Credentials, media, and provenance were
 migrated through bounded source, claim, asset, privacy, localization, and publication gates.
@@ -99,7 +99,7 @@ Exit evidence:
 - approved assets are referenced without exposing private source material;
 - publication and asset-upload approvals remained separate.
 
-### Phase 6 — Production readiness and launch
+### Phase 6: Production readiness and launch
 
 Outcome: static deployment artifacts, indexing policy, canonical domain behavior, metadata, sitemap,
 robots policy, security headers, CI, deployment contract, and disaster-recovery procedure were made

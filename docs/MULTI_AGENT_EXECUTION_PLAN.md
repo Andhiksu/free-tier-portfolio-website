@@ -1,6 +1,6 @@
-# Historical Multi-Agent Execution Plan — Phase 2 Pilot
+# Historical Multi-Agent Execution Plan: Phase 2 Pilot
 
-**Historical phase:** Phase 2 — Static Visual MVP
+**Historical phase:** Phase 2: Static Visual MVP
 **Status:** Historical reference; not active execution guidance
 **Historical operating model:** controlled Phase 2 pilot, one root writer, specialist read-only
 reviewers
@@ -28,10 +28,10 @@ read-only. If any template below conflicts with current governance, ignore it.
 
 Use these sources in order for their stated purposes:
 
-1. `docs/PROGRESS.md` — current phase, current task, and next task.
-2. `docs/PHASE_LOG.md` — verified slice evidence and checkpoint status.
-3. `docs/ROADMAP.md` — canonical phase order, scope, and exit criteria.
-4. `docs/MULTI_AGENT_EXECUTION_PLAN.md` — execution workflow, slice definitions, acceptance
+1. `docs/PROGRESS.md`: current phase, current task, and next task.
+2. `docs/PHASE_LOG.md`: verified slice evidence and checkpoint status.
+3. `docs/ROADMAP.md`: canonical phase order, scope, and exit criteria.
+4. `docs/MULTI_AGENT_EXECUTION_PLAN.md`: execution workflow, slice definitions, acceptance
    criteria, reviewers, Git strategy, and phase review process.
 
 This document must not override newer verified status in `docs/PROGRESS.md` or
@@ -58,7 +58,7 @@ working tree is clean. Resolve live status from `docs/PROGRESS.md` and `docs/PHA
 - Phase 0 completed.
 - Phase 1 completed and merged through PR #1.
 - Phase 2 active.
-- Phase 2 Slice 1 — shared typed homepage foundation completed.
+- Phase 2 Slice 1: shared typed homepage foundation completed.
 - Slice 1 merged through PR #2.
 - `docs/PROGRESS.md` updated through PR #3.
 - `format`, `lint`, `type-check`, `build`, and `diff check` passed.
@@ -125,13 +125,13 @@ Sandbox Auto-review is not a GitHub approval and does not expand permissions.
 
 ```text
 ChatGPT Project
-└── Codex Orchestrator — only writable owner
-    ├── Explorer / Architect — read-only
-    ├── UI & Accessibility Reviewer — read-only
-    ├── QA & Test Reviewer — read-only
-    ├── Code Quality Reviewer — read-only
-    ├── Security & Privacy Reviewer — read-only
-    └── Documentation Reviewer — read-only
+└── Codex Orchestrator: only writable owner
+    ├── Explorer / Architect: read-only
+    ├── UI & Accessibility Reviewer: read-only
+    ├── QA & Test Reviewer: read-only
+    ├── Code Quality Reviewer: read-only
+    ├── Security & Privacy Reviewer: read-only
+    └── Documentation Reviewer: read-only
 ```
 
 ### Single-writer rule
@@ -386,7 +386,7 @@ or:
 
 ---
 
-## 7. Git Strategy — Controlled Phase 2 Pilot
+## 7. Git Strategy: Controlled Phase 2 Pilot
 
 The current pilot uses one long-lived Phase 2 branch and targets one Phase 2 pull request. Review
 this choice after Slice 2. Do not treat it as the default strategy for future phases.
@@ -543,7 +543,7 @@ Format:
 
 ## Phase 2
 
-### Slice 2 — Navigation and Theme Shell
+### Slice 2: Navigation and Theme Shell
 
 Status: completed
 
@@ -585,7 +585,7 @@ Store concise summaries, not raw logs. This file is the durable handoff for long
 
 ## 10. Remaining Phase 2 Slices
 
-### Slice 2 — Navigation and Theme Shell
+### Slice 2: Navigation and Theme Shell
 
 Scope:
 
@@ -615,7 +615,7 @@ Reviewers:
 - QA & Test;
 - Code Quality.
 
-### Slice 3 — Hero and Impact Metrics
+### Slice 3: Hero and Impact Metrics
 
 Scope:
 
@@ -640,7 +640,7 @@ Reviewers:
 - UI & Accessibility;
 - Code Quality.
 
-### Slice 4 — Projects, About, and Career Journey
+### Slice 4: Projects, About, and Career Journey
 
 Scope:
 
@@ -665,7 +665,7 @@ Reviewers:
 - QA & Test;
 - Code Quality.
 
-### Slice 5 — Capabilities, Credentials, Contact, Footer
+### Slice 5: Capabilities, Credentials, Contact, Footer
 
 Scope:
 
@@ -689,7 +689,7 @@ Reviewers:
 - Code Quality;
 - Security & Privacy for external links.
 
-### Slice 6 — Responsive and Accessibility Hardening
+### Slice 6: Responsive and Accessibility Hardening
 
 Scope:
 
@@ -727,7 +727,7 @@ The prompt below is the original phase-start bootstrap template. It is retained 
 reference and must not be used to infer current progress. Resolve current status from
 `docs/PROGRESS.md` and `docs/PHASE_LOG.md` before adapting or running it.
 
-At the time this template was written, the full Slices 2–6 goal was deferred during the
+At the time this template was written, the full Slices 2 to 6 goal was deferred during the
 infrastructure checkpoint, Slice 2 was designated as the first controlled implementation pilot,
 and the workflow was to be re-evaluated after Slice 2.
 
@@ -758,12 +758,12 @@ Current state:
   the same acceptance criterion.
 
 Definition of done:
-- Slices 2–6 complete.
+- Slices 2 to 6 complete.
 - `/`, `/en/`, and `/id/` work.
 - Light-first and dark mode work.
 - Homepage is modular, responsive, accessible, interactive, and not crowded.
 - format, lint, type-check, build, and diff checks pass.
-- tests: N/A — no automated test suite configured.
+- tests: N/A: no automated test suite configured.
 - final specialist review has no unresolved P0/P1 finding.
 - documentation is current.
 - one reviewable Phase 2 PR is open with a complete summary.
@@ -1034,7 +1034,7 @@ After inspecting the current file, add equivalent guidance:
 
 ## Phase
 
-Phase N — Name
+Phase N: Name
 
 ## Summary
 
@@ -1053,7 +1053,7 @@ Phase N — Name
 - format:
 - lint:
 - type-check:
-- tests: N/A — no automated test suite configured
+- tests: N/A: no automated test suite configured
 - build:
 - diff check:
 - route checks:
@@ -1133,7 +1133,7 @@ The sequence below records the original infrastructure rollout. Its early steps 
 historical templates and are not the live task queue. Resolve current status from
 `docs/PROGRESS.md` and `docs/PHASE_LOG.md` before adapting or running any step.
 
-### Step 1 — Read-only audit
+### Step 1: Read-only audit
 
 ```text
 Read this document, AGENTS.md, PROJECT_GUIDE.md, ROADMAP.md, PROGRESS.md,
@@ -1150,7 +1150,7 @@ Report:
 - Phase 2 Slice 2 plan.
 ```
 
-### Step 2 — Add orchestration infrastructure
+### Step 2: Add orchestration infrastructure
 
 In one scoped task:
 
@@ -1164,23 +1164,23 @@ In one scoped task:
 Keep this setup on the Phase 2 pilot branch. Staging, committing, pushing, and creating the target
 Phase 2 pull request each require owner review and explicit approval.
 
-### Step 3 — Run the controlled Slice 2 pilot
+### Step 3: Run the controlled Slice 2 pilot
 
-Do not run the full Slices 2–6 goal yet. Implement Slice 2 as the first controlled pilot, then
+Do not run the full Slices 2 to 6 goal yet. Implement Slice 2 as the first controlled pilot, then
 evaluate the workflow.
 
-### Step 4 — Re-evaluate, then prepare the intended Phase 2 PR
+### Step 4: Re-evaluate, then prepare the intended Phase 2 PR
 
 After Slice 2, decide whether to continue the one-branch/one-PR pilot. Any staging, checkpoint
 commit, push, or pull-request creation remains separately human-gated.
 
 Include:
 
-- Slices 2–6;
+- Slices 2 to 6;
 - multi-agent configuration;
 - phase documentation.
 
-### Step 5 — Evaluate after Slice 2
+### Step 5: Evaluate after Slice 2
 
 Measure:
 

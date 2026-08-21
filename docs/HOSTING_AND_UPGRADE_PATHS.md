@@ -14,14 +14,14 @@ domains per project, 20,000 files per site, and a 25 MiB maximum per asset.
 
 - [Cloudflare Pages overview](https://developers.cloudflare.com/pages/)
 - [Cloudflare Pages limits](https://developers.cloudflare.com/pages/platform/limits/)
-- [Cloudflare Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/) — only
+- [Cloudflare Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/): only
   relevant if you later add server logic; Workers Paid currently starts at USD 5/month.
 
 ## Custom domain
 
 A `pages.dev` address is free. A custom domain is optional and normally paid annually to a
 registrar. Hostinger is one example; Cloudflare Registrar or another accredited registrar can work
-as well. Compare renewal price—not only the first-year promotion—plus privacy, transfer rules, tax,
+as well. Compare renewal price, not only the first-year promotion, plus privacy, transfer rules, tax,
 and currency.
 
 - [Hostinger domain search](https://www.hostinger.com/domains)
@@ -51,5 +51,5 @@ special runtime control. A VPS adds patching, firewall, backups, monitoring, and
 4. Add Workers or Cloud Run only for small server-side behavior.
 5. Move to a VPS only when its control is worth becoming responsible for a server.
 
-The one-run assistant must show the estimated recurring cost and ask before creating any paid
+The one run assistant must show the estimated recurring cost and ask before creating any paid
 resource. It must never interpret a promotional price as a permanent cost.

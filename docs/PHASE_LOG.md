@@ -7,9 +7,9 @@ The legacy website documented by these checkpoints has been retired. Its former 
 migrated to a new independent website that this repository does not control. Entries below remain historical
 evidence for the educational/portfolio case study and must not be read as current deployment status.
 
-## Phase 2 — Static Visual MVP
+## Phase 2: Static Visual MVP
 
-### Infrastructure checkpoint — Multi-agent orchestration
+### Infrastructure checkpoint: Multi-agent orchestration
 
 **Status:** Completed locally
 
@@ -49,7 +49,7 @@ evidence for the educational/portfolio case study and must not be read as curren
 
 - GitHub CI execution after a pull request exists.
 
-**Automated tests:** N/A — no automated test suite configured.
+**Automated tests:** N/A: no automated test suite configured.
 
 **Reviewer findings:**
 
@@ -121,8 +121,8 @@ evidence for the educational/portfolio case study and must not be read as curren
 
 **Deferred:**
 
-- Phase 2 Slice 2 — navigation and theme shell.
-- Automated tests: N/A — no automated test suite configured.
+- Phase 2 Slice 2: navigation and theme shell.
+- Automated tests: N/A: no automated test suite configured.
 
 **Commit:** local checkpoint commit created
 
@@ -132,7 +132,7 @@ evidence for the educational/portfolio case study and must not be read as curren
 
 The checkpoint has not been pushed, reviewed on GitHub, merged, or deployed.
 
-### Slice 2 — Navigation and Theme Shell
+### Slice 2: Navigation and Theme Shell
 
 **Status:** Completed locally
 
@@ -193,7 +193,7 @@ The checkpoint has not been pushed, reviewed on GitHub, merged, or deployed.
   synchronized values, and retained the light fallback for invalid values or errors.
 - Reran targeted checks and the complete verification set after the fixes; all passed.
 
-**Automated tests:** N/A — no automated test suite configured.
+**Automated tests:** N/A: no automated test suite configured.
 
 **Owner manual browser QA:** Completed with no failures in Google Chrome against the local Astro
 development server.
@@ -228,7 +228,7 @@ Human-reviewed staging and the local checkpoint commit are complete.
 The checkpoint has not been pushed, reviewed on GitHub, included in a pull request, merged, or
 deployed.
 
-### Slice 3 — Hero and Impact Metrics
+### Slice 3: Hero and Impact Metrics
 
 **Status:** Completed locally
 
@@ -284,7 +284,7 @@ deployed.
 - Applied scoped formatting to the English locale data after the initial format check.
 - No reviewer fix was required because no P0, P1, or acceptance-relevant P2 finding was reported.
 
-**Automated tests:** N/A — no automated test suite configured.
+**Automated tests:** N/A: no automated test suite configured.
 
 **Owner manual browser QA:** Completed with no failures in Google Chrome against the local Astro
 development server.
@@ -321,7 +321,7 @@ development server.
 The Slice 3 checkpoint has not been pushed, reviewed on GitHub, included in a pull request, merged,
 or deployed.
 
-### Slice 4 — Projects, About, and Career Journey
+### Slice 4: Projects, About, and Career Journey
 
 **Status:** Completed locally
 
@@ -382,7 +382,7 @@ or deployed.
 - Added `role="list"` to the project and tag lists while preserving native `ul`/`li` structure and
   noninteractive behavior.
 - Reran the complete check set successfully.
-- The same UI/accessibility reviewer confirmed the P2 resolved with no remaining P0–P3 finding.
+- The same UI/accessibility reviewer confirmed the P2 resolved with no remaining P0 to P3 finding.
 
 **Initial browser QA finding and fix:**
 
@@ -405,7 +405,7 @@ or deployed.
 - No interactive or focusable Slice 4 content was introduced, and the console remained free of
   Slice 4 errors and warnings.
 
-**Automated tests:** N/A — no automated test suite configured.
+**Automated tests:** N/A: no automated test suite configured.
 
 **Owner manual browser QA:** Completed with no failures in Google Chrome on macOS.
 
@@ -447,7 +447,7 @@ Staging completed through owner review, and the local checkpoint commit was crea
 currently staged. The checkpoint has not been pushed, reviewed on GitHub, included in a pull
 request, merged, or deployed. Slice 5 has not started.
 
-### Slice 5 — Capabilities, Credentials, Contact, Footer
+### Slice 5: Capabilities, Credentials, Contact, Footer
 
 **Status:** Completed and committed locally; awaiting Phase 2 Slice 6 work and later branch-level
 review
@@ -462,7 +462,7 @@ review
   flow.
 - Extract the existing inline footer into one static `SiteFooter` without year, navigation, or
   profile links.
-- Preserve strict typed data, all Slice 2–4 behavior, the Hero `#impact` CTA, locale routes, static
+- Preserve strict typed data, all Slice 2 to 4 behavior, the Hero `#impact` CTA, locale routes, static
   rendering, privacy boundaries, and dependency scope.
 
 **Implementation files changed:**
@@ -520,7 +520,7 @@ review
   check.
 - No reviewer fix was required because no P0, P1, P2, or P3 finding was reported.
 
-**Automated tests:** N/A — no automated test suite configured.
+**Automated tests:** N/A: no automated test suite configured.
 
 **Owner manual browser QA:** Completed and passed
 
@@ -564,7 +564,7 @@ staged; at that historical Slice 5 closeout, only `docs/PHASE_LOG.md` and `docs/
 modified and unstaged. The branch had not been pushed, and no Phase 2 pull request existed. Slice 5
 had not been reviewed on GitHub, merged, or deployed. Slice 6 had not started.
 
-### Slice 6 — Responsive and Accessibility Hardening
+### Slice 6: Responsive and Accessibility Hardening
 
 **Status:** Implementation, verification, final specialist review, owner manual browser QA,
 human-reviewed staging, and the local checkpoint commit completed locally
@@ -622,7 +622,7 @@ human-reviewed staging, and the local checkpoint commit completed locally
 - Security and privacy review found no actionable issue or scope expansion.
 - Documentation review found no actionable documentation issue in the completed Slice 6 evidence.
 
-**Automated tests:** N/A — no automated test suite configured.
+**Automated tests:** N/A: no automated test suite configured.
 
 **Loading and failure states:** N/A for the current fully static implementation.
 
@@ -786,7 +786,7 @@ human-reviewed staging, and the local remediation checkpoint commit completed lo
   verification, focused source/static verification, focused reviewer results, and owner browser
   re-QA.
 - The GitHub Actions pinning P3 remains deferred and non-blocking.
-- Automated tests: N/A — no automated test suite configured.
+- Automated tests: N/A: no automated test suite configured.
 - Loading and failure states: N/A for the current fully static implementation.
 - Human-reviewed remediation staging: completed.
 - The reviewed staged scope contains exactly five modified files:
@@ -936,9 +936,9 @@ human-reviewed staging, and the local remediation checkpoint commit completed lo
 - The next task is to review owner-provided Phase 3 strategy points and record
   an approved workflow decision before implementation begins.
 
-## Phase 3 — Core Pages and Project Case Studies
+## Phase 3: Core Pages and Project Case Studies
 
-### Milestone 0 — Preflight and durable context
+### Milestone 0: Preflight and durable context
 
 **Status:** Completed locally; awaiting explicit owner approval before push
 
@@ -960,7 +960,7 @@ human-reviewed staging, and the local remediation checkpoint commit completed lo
   enhancement.
 - Added the Phase 3 design direction derived as original principles from the six owner-supplied
   references, with explicit non-copying boundaries.
-- Expanded Phase 3 into Milestones 0–6 and recorded their scopes, risk levels, and exit criteria.
+- Expanded Phase 3 into Milestones 0 to 6 and recorded their scopes, risk levels, and exit criteria.
 - Aligned source precedence, the prefixed locale route convention, the deterministic `/` to `/en/`
   308 redirect, live progress, and uploaded-snapshot refresh guidance.
 - Marked the multi-agent execution plan as historical Phase 2 evidence that cannot override active
@@ -1002,7 +1002,7 @@ human-reviewed staging, and the local remediation checkpoint commit completed lo
 - Nothing was merged or deployed.
 - At that initial checkpoint, the planned next gate was explicit owner approval before push.
 
-### Milestone 0 — Read-only review and documentation remediation
+### Milestone 0: Read-only review and documentation remediation
 
 **Status:** Remediation completed locally; read-only re-review pending
 
@@ -1089,10 +1089,10 @@ human-reviewed staging, and the local remediation checkpoint commit completed lo
   `57ff4d80b63f0b7c8f4bd963fa4dc5f6fcddea47`; no archive content was inspected or reused for this
   checkpoint.
 - No push, pull request, merge, or deployment occurred during this documentation task.
-- The next product boundary is canonical ROADMAP Milestone 4 — Project system; pushing the
+- The next product boundary is canonical ROADMAP Milestone 4: Project system; pushing the
   long-lived Phase 3 branch remains subject to explicit owner approval.
 
-### Milestone 4 — Bilingual Project System
+### Milestone 4: Bilingual Project System
 
 **Status:** Completed locally
 
@@ -1177,7 +1177,7 @@ human-reviewed staging, and the local remediation checkpoint commit completed lo
   reduced-motion browser, VoiceOver, physical-device, cross-browser, automated-browser, and measured
   contrast coverage are not claimed for this checkpoint. Source and generated-output review found no
   actionable issue; final integrated coverage remains in Milestone 6.
-- Automated tests: **N/A — no automated test suite configured**.
+- Automated tests: **N/A: no automated test suite configured**.
 
 **Documentation checkpoint:**
 
@@ -1193,7 +1193,7 @@ human-reviewed staging, and the local remediation checkpoint commit completed lo
 - The next product boundary is Milestone 5, subject to explicit owner approval of its implementation
   scope. Push remains behind a separate explicit owner gate.
 
-### Milestone 5 — Route, SEO, and Error Integration
+### Milestone 5: Route, SEO, and Error Integration
 
 **Status:** Completed and verified locally; owner checkpoint review pending
 
@@ -1243,7 +1243,7 @@ human-reviewed staging, and the local remediation checkpoint commit completed lo
   `robots.txt` or unpublished project content.
 - Local HTTP smoke checks passed for both homepages, archives, all detail routes, errors, sitemap,
   and content type. No production HTTP status behavior was claimed.
-- Automated tests: **N/A — no automated test suite is configured**.
+- Automated tests: **N/A: no automated test suite is configured**.
 
 **Focused browser review:**
 
@@ -1282,7 +1282,7 @@ human-reviewed staging, and the local remediation checkpoint commit completed lo
   action occurred.
 - The next task is owner review of the Milestone 5 checkpoint before any push.
 
-### Milestone 6 — Final Integrated Hardening
+### Milestone 6: Final Integrated Hardening
 
 **Status:** Consolidated remediation and available final verification completed locally; owner
 checkpoint review pending
@@ -1329,7 +1329,7 @@ checkpoint review pending
 **Verification results:**
 
 - Formatting, linting, Astro type-checking across 37 files with zero diagnostics, production build,
-  and whitespace checks passed. Automated tests are **N/A — no test script is configured**.
+  and whitespace checks passed. Automated tests are **N/A: no test script is configured**.
 - The static audit passed the exact ten content routes, root redirect artifact, `404.html`,
   `sitemap.xml`, absent invalid/unknown outputs, canonical and EN/ID alternate matrices, unique
   managed metadata, one heading and main landmark, unique IDs, internal links, same-page hashes, six
@@ -1372,9 +1372,9 @@ checkpoint review pending
   branch cleanup was performed.
 - The next task is owner review of the final Phase 3 hardening checkpoint before any push.
 
-## Phase 4 — Sanity CMS
+## Phase 4: Sanity CMS
 
-### Milestone 0 — Transition and Autonomous Workflow
+### Milestone 0: Transition and Autonomous Workflow
 
 **Status:** Completed locally; Phase 4 branch push remains unapproved
 
@@ -1402,7 +1402,7 @@ checkpoint review pending
 - Standalone Studio, static Astro, typed and validated CMS adapters, published-only production
   queries, non-public draft access, safe missing configuration, and static migration fallback.
 - Content-type localization fallback, bounded core schema inventory, privacy-aware asset metadata,
-  environment/secret separation, Milestones 0–6, exact acceptance criteria, and human gates.
+  environment/secret separation, Milestones 0 to 6, exact acceptance criteria, and human gates.
 
 **Files prepared:**
 
@@ -1434,7 +1434,7 @@ checkpoint review pending
 - Secret scan and empty `.env.example` values: passed.
 - Reservation-only Studio, no Sanity dependency or implementation, static Astro, and no executable
   runner remote-write command assertions: passed.
-- Automated tests: **N/A — no automated test script is configured.**
+- Automated tests: **N/A: no automated test script is configured.**
 
 **Review and remediation:**
 
@@ -1455,7 +1455,7 @@ checkpoint review pending
 - Nothing was pushed, no pull request was created or updated, and no external or irreversible gate
   was crossed.
 
-### Milestone 1 — Studio Scaffold and Repository Integration
+### Milestone 1: Studio Scaffold and Repository Integration
 
 **Status:** Completed locally; Phase 4 branch push remains unapproved
 
@@ -1530,14 +1530,14 @@ checkpoint review pending
   no pull request was created or updated, and no merge, deployment, branch deletion, or force
   operation occurred.
 
-### Milestones 2–5 — Bounded CMS Integration Wave
+### Milestones 2 to 5: Bounded CMS Integration Wave
 
 **Status:** Completed locally; post-Milestone-1 commits remain unpushed
 
 **Preserved baseline and security remediation:**
 
 - The wave resumed on `phase/4-sanity-cms` at exact pushed Milestone 1 head
-  `22495b44a97d099eb1d13d27b7f38b369cf7d458`. Staged and unstaged Milestone 2–3 source changes were
+  `22495b44a97d099eb1d13d27b7f38b369cf7d458`. Staged and unstaged Milestone 2 to 3 source changes were
   inventoried without printing environment values and preserved without reset, clean, checkout,
   restore, stash, history rewrite, or force operation.
 - The prior Sanity CLI session implicated in an exposed local diagnostic was logged out through the
@@ -1614,14 +1614,14 @@ checkpoint review pending
 
 **Local checkpoints and remaining gates:**
 
-- `2dea686` — `feat: add bounded Sanity schemas and Studio structure`
-- `9f86692` — `feat: add validated Sanity query integration`
-- `0b82ea0` — `feat: add safe temporary CMS content workflow`
+- `2dea686`: `feat: add bounded Sanity schemas and Studio structure`
+- `9f86692`: `feat: add validated Sanity query integration`
+- `0b82ea0`: `feat: add safe temporary CMS content workflow`
 - Nothing after `22495b44a97d099eb1d13d27b7f38b369cf7d458` was pushed. No pull request was created or
   updated, and no merge, deployment, CORS, token, billing, DNS, branch deletion, or force action
   occurred. Push remains the next exact human gate.
 
-### Milestone 6 — Final Integrated Hardening
+### Milestone 6: Final Integrated Hardening
 
 **Status:** Completed and later merged through PR #8
 
@@ -1631,7 +1631,7 @@ checkpoint review pending
   `9b9cf5819a03386cff6059eeb3178369f3b7683f`. Worktree, staging area, untracked set, changed-file
   list, and staged/unstaged statistics were empty.
 - The remote still resolved to the approved pre-wave head
-  `22495b44a97d099eb1d13d27b7f38b369cf7d458`. The five expected Milestones 2–5 commits and
+  `22495b44a97d099eb1d13d27b7f38b369cf7d458`. The five expected Milestones 2 to 5 commits and
   divergence `5/0` were reverified before any remote write.
 - The exact approved checkpoint was pushed once with an explicit non-force refspec. Live remote
   verification then resolved `origin/phase/4-sanity-cms` to
@@ -1697,9 +1697,9 @@ checkpoint review pending
   `fc2f2e5fcb7d4c5baac095ed2d0f21a1da41a9c9`, and post-merge CI run #12 succeeded. No deployment,
   branch cleanup, force operation, or production action occurred.
 
-## Phase 5 — Real Content Migration
+## Phase 5: Real Content Migration
 
-### Milestone 0 — Transition, Source Authority, and Publication Plan
+### Milestone 0: Transition, Source Authority, and Publication Plan
 
 **Status:** Completed and exact checkpoint pushed; no pull request created
 
@@ -1723,7 +1723,7 @@ checkpoint review pending
   path, the public-dataset boundary, claim lifecycle, separate source and asset/evidence registers,
   complete reviewed EN/ID by default, the three launch-project mappings, later-gated descriptive
   slugs, later-gated bounded credential categories, private phone and gated public contact/CV,
-  bounded publication batches with rollback, honest unsupported states, Milestones 0–7, and no
+  bounded publication batches with rollback, honest unsupported states, Milestones 0 to 7, and no
   Phase 5 deployment.
 - ADR-020 records the complete durable decision package while preserving ADR-001 through ADR-019 as
   historical accepted decisions.
@@ -1800,7 +1800,7 @@ checkpoint review pending
 - The owner accepted the local-only Milestone 1 non-sensitive register-normalization scope. No
   private-evidence access, Sanity write, asset upload, publication, or later push is included.
 
-### Milestone 1 — Claim, Source, and Asset Register Normalization
+### Milestone 1: Claim, Source, and Asset Register Normalization
 
 **Status:** Completed and exact checkpoint pushed; no pull request created
 
@@ -1864,7 +1864,7 @@ checkpoint review pending
 - The owner accepted the local-only Milestone 2 review-package scope. No publication, Sanity write,
   private-evidence access, asset action, application/schema/query change, or later push is included.
 
-### Milestone 2 — Site Settings, Public Identity, and Profile/About Review Package
+### Milestone 2: Site Settings, Public Identity, and Profile/About Review Package
 
 **Status:** Completed and exact checkpoint pushed; owner decisions remain pending
 
@@ -2052,7 +2052,7 @@ proposal can be prepared. Selection alone is not upload or publication approval.
 
 ## Prelaunch Deployment Foundation
 
-### PDF-M1 — Repository foundation
+### PDF-M1: Repository foundation
 
 **Status:** Completed locally on `prelaunch/deployment-foundation`; no remote or provider action has
 occurred.
@@ -2098,7 +2098,7 @@ occurred.
   configuration, deployment, CMS action, asset upload, and Phase 5 resumption remain separate exact
   owner approvals.
 
-### PDF-M3 — Sanity Studio deployment
+### PDF-M3: Sanity Studio deployment
 
 **Status:** Completed on 2026-07-18 with the separately approved Sanity-managed Studio host
 `portfolio-reference.sanity.studio`.
@@ -2129,7 +2129,7 @@ occurred.
   approval. The local documentation record must not be pushed, made into a pull request, merged, or
   used to authorize Phase 5 publication work.
 
-### PDF-M4 — Cloudflare Pages prelaunch deployment
+### PDF-M4: Cloudflare Pages prelaunch deployment
 
 **Status:** Completed on 2026-07-18 through the separately approved Cloudflare Pages gate.
 
@@ -2179,9 +2179,9 @@ occurred.
 - The local PDF-M4 documentation checkpoint requires its own exact push approval; no pull request,
   merge, or branch cleanup is authorized.
 
-### PDF-M5 — CMS rebuild automation deferred
+### PDF-M5: CMS rebuild automation deferred
 
-**Status:** `Deferred — automation not configured`.
+**Status:** `Deferred: automation not configured`.
 
 **Evidence and decision:**
 
@@ -2206,7 +2206,7 @@ occurred.
   `prelaunch/cms-rebuild-automation-defer-record`. Push, pull request, merge, hook replacement,
   webhook creation, deployment, and branch cleanup require separate exact owner approvals.
 
-## Phase 5 — Fast-Track All-Asset Preparation
+## Phase 5: Fast-Track All-Asset Preparation
 
 **Status:** Local preparation complete; consolidated upload gate pending.
 
@@ -2272,7 +2272,7 @@ occurred.
 - No private path, source asset, derivative, credential-specific URL, or sensitive value enters the
   commit.
 
-## Phase 5 — Consolidated Sanity Asset Upload
+## Phase 5: Consolidated Sanity Asset Upload
 
 **Status:** `BATCH-P5-ASSET-UPLOAD-GREEN-001` executed and read-only verified; content publication
 remains unapproved.
@@ -2311,7 +2311,7 @@ remains unapproved.
 - Additional upload, replacement, cleanup, or asset deletion is not authorized. The local checkpoint
   must remain unpushed until a separate exact remote Git gate.
 
-## Phase 5 — Consolidated Bilingual Content Publication and Integrated QA
+## Phase 5: Consolidated Bilingual Content Publication and Integrated QA
 
 **Status:** `BATCH-P5-CONTENT-PUBLISH-ALL-001` executed and verified; local repository checkpoint
 ready for its release gate.
@@ -2394,7 +2394,7 @@ ready for its release gate.
 - The checkpoint remains local. No schema, Project slug, Sanity CMS state, or private credential was mutated.
 - The next boundary is the exact owner-controlled Phase 5 remediation release gate.
 
-## Phase 5 — Presentation Hardening (BATCH-P5-PRESENTATION-HARDENING-002)
+## Phase 5: Presentation Hardening (BATCH-P5-PRESENTATION-HARDENING-002)
 
 **Status:** Current-data presentation accepted by the owner; consolidated pre-review verification in
 progress.
@@ -2424,7 +2424,7 @@ progress.
   refinement, the owner accepted the current layout as a checkpoint for the content and media that
   are currently approved, published, and available.
 
-## Phase 5 — Credential Media Gallery Repository Implementation
+## Phase 5: Credential Media Gallery Repository Implementation
 
 **Status:** Repository implementation, exact owner-approved content-reference mutation, and local
 verification complete; current-data presentation accepted by the owner.
@@ -2479,7 +2479,7 @@ verification complete; current-data presentation accepted by the owner.
 - The next boundary is one coherent local checkpoint commit and then Antigravity final read-only
   QA. Push, pull request, merge, and deployment approval remain absent.
 
-## Phase 5 — All Approved Asset Website Integration (BATCH-P5-ALL-ASSET-WEBSITE-INTEGRATION-001)
+## Phase 5: All Approved Asset Website Integration (BATCH-P5-ALL-ASSET-WEBSITE-INTEGRATION-001)
 
 **Status:** Complete local implementation and approved Sanity mutation; release actions remain
 gated.
@@ -2541,7 +2541,7 @@ gated.
   safety policy rejected preview control. No workaround, remote action, or additional CMS mutation
   was used.
 
-### Milestone 5.8 — Governance Hardening & All-Approved Asset Integration
+### Milestone 5.8: Governance Hardening & All-Approved Asset Integration
 
 **Status:** Completed locally; ready for Phase 5 local checkpoint commit
 
@@ -2561,7 +2561,7 @@ gated.
 - `pnpm build:web`: 20 static HTML pages generated in 334ms.
 - Repository Health: 🟢 **GREEN**.
 
-### Phase 5 — Official Closeout & Completion Checkpoint
+### Phase 5: Official Closeout & Completion Checkpoint
 
 **Status:** OFFICIALLY COMPLETED & CLOSED
 
@@ -2572,7 +2572,7 @@ gated.
 - The repository documentation (`GOVERNANCE.md`, `AGENTS.md`, `PROJECT_GUIDE.md`, `DECISIONS.md`, `ROADMAP.md`, `PROGRESS.md`, `PHASE_LOG.md`, `README.md`) is 100% synchronized with the actual implementation state.
 - Repository Health is 🟢 **GREEN**. Ready for Phase 5 local checkpoint commit and Phase 6 planning.
 
-### Phase 6 — Milestones 6.0 through 6.8 Execution & Production Readiness
+### Phase 6: Milestones 6.0 through 6.8 Execution & Production Readiness
 
 **Status:** Completed locally; ready for Phase 6 local checkpoint commit and owner gates
 
@@ -2591,7 +2591,7 @@ gated.
 - `pnpm build:web`: 20 static HTML pages generated in 318ms.
 - Repository Health: 🟢 **GREEN**.
 
-## Authoritative main baseline reconciliation — 2026-08-10
+## Authoritative main baseline reconciliation: 2026-08-10
 
 **Status:** Complete locally; owner review required before any remote action
 
@@ -2607,7 +2607,7 @@ gated.
 - Confirmed that neither rejected branch was current, attached to another worktree, or present as a
   remote branch. No remote ref, tag, worktree, or accepted baseline changed, and no rejected visual
   work was imported.
-- Reconstructed the accepted linear history through PRs 15–17 and the direct post-release commits
+- Reconstructed the accepted linear history through PRs 15 to 17 and the direct post-release commits
   ending at `c428d26`.
 
 ### Repository reconciliation
@@ -2656,7 +2656,7 @@ gated.
 - No push, pull request, merge, tag, deployment, provider/DNS change, Sanity mutation, content or
   asset publication, secret handling, dependency change, or additional branch cleanup occurred.
 
-## Focused pre-push contact-policy reconciliation — 2026-08-10
+## Focused pre-push contact-policy reconciliation: 2026-08-10
 
 **Status:** Complete locally; owner review required before push
 
@@ -2705,7 +2705,7 @@ gated.
   identical before and after. No dependency, lockfile, Sanity, asset, remote Git, provider, DNS,
   deployment, or additional publication action was performed.
 
-## Public reusable-reference completion — 2026-08-21
+## Public reusable-reference completion: 2026-08-21
 
 **Status:** Complete locally on an isolated branch; remote actions remain owner-gated
 

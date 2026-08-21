@@ -71,7 +71,7 @@ function getDefaultStructuredData(
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Portfolio Owner — Portfolio",
+    name: "Portfolio Owner: Portfolio",
     url: PRODUCTION_ORIGIN,
     inLanguage: ["en-US", "id-ID"],
   };

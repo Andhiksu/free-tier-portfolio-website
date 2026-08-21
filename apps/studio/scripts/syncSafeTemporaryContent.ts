@@ -212,8 +212,8 @@ const documents: SafeTemporaryDocument[] = [
     _id: 'siteSettings',
     _type: 'siteSettings',
     siteTitle: localizedShort(
-      'Portfolio Owner — Data & Applied AI Portfolio',
-      'Portfolio Owner — Portofolio Data & AI Terapan',
+      'Portfolio Owner: Data & Applied AI Portfolio',
+      'Portfolio Owner: Portofolio Data & AI Terapan',
     ),
     siteDescription: localizedLong(
       'Explore Portfolio Owner’s portfolio direction across data, business intelligence, data science, and applied AI.',
@@ -242,14 +242,14 @@ const documents: SafeTemporaryDocument[] = [
       order: index * 10,
     })),
     footer: localizedLong(
-      'Portfolio Owner — a data, analytics, and applied AI portfolio built with evidence and privacy in mind.',
-      'Portfolio Owner — portofolio data, analitik, dan AI terapan yang dibangun dengan perhatian pada bukti dan privasi.',
+      'Portfolio Owner: a data, analytics, and applied AI portfolio built with evidence and privacy in mind.',
+      'Portfolio Owner: portofolio data, analitik, dan AI terapan yang dibangun dengan perhatian pada bukti dan privasi.',
     ),
     seo: {
       _type: 'seoSettings',
       title: localizedShort(
-        'Portfolio Owner — Data & Applied AI Portfolio',
-        'Portfolio Owner — Portofolio Data & AI Terapan',
+        'Portfolio Owner: Data & Applied AI Portfolio',
+        'Portfolio Owner: Portofolio Data & AI Terapan',
       ),
       description: localizedLong(
         'Explore Portfolio Owner’s portfolio direction across data, business intelligence, data science, and applied AI.',

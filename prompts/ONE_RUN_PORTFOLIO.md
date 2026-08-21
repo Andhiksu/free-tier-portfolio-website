@@ -1,7 +1,7 @@
-# Canonical prompt: AI-assisted one-run portfolio setup
+# Canonical prompt: AI assisted one run portfolio setup
 
-Use this prompt with a coding agent that can read and edit files, run terminal commands, and—when
-authorized—operate a browser. It is provider-neutral.
+Use this prompt with a coding agent that can read and edit files, run terminal commands, and, when
+authorized, operate a browser. It is provider-neutral.
 
 > Build my portfolio from this repository and the material in `starter-input/`. Read `AGENTS.md`,
 > `START_HERE_AI.md`, and the repository documentation before editing. Validate the input first.
@@ -9,7 +9,7 @@ authorized—operate a browser. It is provider-neutral.
 > Use `starter-input/ui-references/` and `starter-input/brand-references/` as visual direction, not
 > as permission to copy third-party work. Preserve accessible semantic HTML, responsive behavior,
 > reduced motion, bilingual parity when requested, static fallback content, and the Cloudflare Pages
-> free-tier baseline. Keep Sanity optional unless `profile.json` requests it. Never read, print,
+> free tier baseline. Keep Sanity optional unless `profile.json` requests it. Never read, print,
 > commit, or request secrets in chat. Run `pnpm verify`, preview representative mobile and desktop
 > pages, fix failures within scope, and document exact results. Prepare the Cloudflare Pages build
 > contract (`pnpm build:web`, output `apps/web/dist`). Stop and ask me only before login, credential

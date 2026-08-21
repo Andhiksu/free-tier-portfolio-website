@@ -151,7 +151,7 @@ one publication batch does not authorize another batch or an asset upload.
 ## 8. Content, privacy, and publication
 
 The repository, accepted ADRs, and approved non-sensitive registers govern public claims. Candidate
-files, CVs, inventories, owner statements, media, and drafts are sources to verify—not automatic
+files, CVs, inventories, owner statements, media, and drafts are sources to verify, not automatic
 publication authority.
 
 - Treat every public Sanity dataset record, including drafts, as potentially public.
