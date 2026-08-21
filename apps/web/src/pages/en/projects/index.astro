@@ -1,0 +1,12 @@
+---
+import ProjectArchivePage from "../../../components/pages/ProjectArchivePage.astro";
+import { getSiteContent } from "../../../lib/sanity/loader";
+
+const content = await getSiteContent();
+---
+
+<ProjectArchivePage
+  locale="en"
+  homeData={content.homeData.en}
+  projects={content.projects}
+/>

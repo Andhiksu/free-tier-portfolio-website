@@ -1,0 +1,195 @@
+---
+import type { HomeLocale } from "../../types/home";
+
+interface Props {
+  locale?: HomeLocale;
+}
+
+const { locale = "en" } = Astro.props;
+const closeLabel =
+  locale === "id" ? "Tutup pratinjau foto" : "Close image preview";
+const dialogLabel =
+  locale === "id" ? "Pratinjau gambar diperbesar" : "Enlarged image preview";
+const openLabel =
+  locale === "id" ? "Buka pratinjau gambar" : "Open image preview";
+---
+
+<dialog
+  id="image-lightbox"
+  class="image-lightbox"
+  aria-label={dialogLabel}
+  aria-describedby="lightbox-caption"
+  data-lightbox-open-label={openLabel}
+>
+  <div class="image-lightbox__backdrop" data-lightbox-close aria-hidden="true">
+  </div>
+  <div class="image-lightbox__container">
+    <button
+      type="button"
+      class="image-lightbox__close"
+      data-lightbox-close
+      aria-label={closeLabel}
+    >
+      <span aria-hidden="true">✕</span>
+    </button>
+    <div class="image-lightbox__media">
+      <img id="lightbox-img" class="image-lightbox__img" alt="" />
+    </div>
+    <div class="image-lightbox__info" id="lightbox-info">
+      <p id="lightbox-caption" class="image-lightbox__caption"></p>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function setupUniversalLightbox() {
+    const dialog = document.getElementById(
+      "image-lightbox",
+    ) as HTMLDialogElement | null;
+    const lightboxImg = document.getElementById(
+      "lightbox-img",
+    ) as HTMLImageElement | null;
+    const lightboxCaption = document.getElementById("lightbox-caption");
+    const lightboxInfo = document.getElementById("lightbox-info");
+
+    if (!dialog || !lightboxImg || dialog.dataset.lightboxReady === "true") {
+      return;
+    }
+
+    const activeDialog = dialog;
+    const activeImg = lightboxImg;
+    const openLabel =
+      activeDialog.dataset.lightboxOpenLabel ?? "Open image preview";
+    let activeTrigger: HTMLImageElement | null = null;
+    let previousBodyOverflow = "";
+
+    const isEligibleImage = (image: HTMLImageElement) =>
+      Boolean(
+        image.alt.trim() &&
+        image.src &&
+        !image.closest(
+          ".image-lightbox, a[href], button, [aria-hidden='true']",
+        ),
+      );
+
+    const prepareTriggers = () => {
+      document.querySelectorAll<HTMLImageElement>("img").forEach((image) => {
+        if (!isEligibleImage(image)) return;
+
+        image.dataset.lightboxTrigger = "";
+        image.tabIndex = 0;
+        image.setAttribute("role", "button");
+        image.setAttribute("aria-haspopup", "dialog");
+        image.setAttribute("aria-controls", activeDialog.id);
+        image.setAttribute("aria-label", `${openLabel}: ${image.alt.trim()}`);
+      });
+    };
+
+    function openLightbox(imgEl: HTMLImageElement) {
+      const src = imgEl.currentSrc || imgEl.src;
+      if (!src) return;
+
+      activeImg.src = src;
+      activeImg.alt = imgEl.alt || "";
+
+      // Find caption if available
+      const figure = imgEl.closest(
+        "figure, article, .evidence-gallery__item, .credential-preview",
+      );
+      const captionEl = figure?.querySelector(
+        "figcaption, .managed-image__caption, h3, p",
+      );
+      const overrideCaption =
+        imgEl
+          .closest("[data-lightbox-caption]")
+          ?.getAttribute("data-lightbox-caption") ?? "";
+      const captionText =
+        overrideCaption || imgEl.alt || captionEl?.textContent?.trim() || "";
+
+      if (lightboxCaption) {
+        if (captionText) {
+          lightboxCaption.textContent = captionText;
+          if (lightboxInfo) lightboxInfo.hidden = false;
+        } else {
+          lightboxCaption.textContent = "";
+          if (lightboxInfo) lightboxInfo.hidden = true;
+        }
+      }
+
+      if (typeof activeDialog.showModal === "function") {
+        activeDialog.showModal();
+      } else {
+        activeDialog.setAttribute("open", "true");
+      }
+
+      activeTrigger = imgEl;
+      previousBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      activeDialog
+        .querySelector<HTMLButtonElement>("[data-lightbox-close]")
+        ?.focus();
+    }
+
+    function restorePageState() {
+      document.body.style.overflow = previousBodyOverflow;
+      activeImg.removeAttribute("src");
+      activeTrigger?.focus();
+      activeTrigger = null;
+    }
+
+    function closeLightbox() {
+      if (typeof activeDialog.close === "function") {
+        if (activeDialog.open) activeDialog.close();
+      } else {
+        activeDialog.removeAttribute("open");
+        restorePageState();
+      }
+    }
+
+    document.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+
+      if (target.closest("[data-lightbox-close]")) {
+        closeLightbox();
+        return;
+      }
+
+      const img = target.closest<HTMLImageElement>("[data-lightbox-trigger]");
+      if (img) {
+        openLightbox(img);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && activeDialog.hasAttribute("open")) {
+        event.preventDefault();
+        closeLightbox();
+        return;
+      }
+
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const target = event.target;
+      if (!(target instanceof HTMLImageElement)) return;
+      if (!target.matches("[data-lightbox-trigger]")) return;
+
+      event.preventDefault();
+      openLightbox(target);
+    });
+
+    activeDialog.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      closeLightbox();
+    });
+    activeDialog.addEventListener("close", restorePageState);
+
+    activeDialog.dataset.lightboxReady = "true";
+    prepareTriggers();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupUniversalLightbox);
+  } else {
+    setupUniversalLightbox();
+  }
+</script>

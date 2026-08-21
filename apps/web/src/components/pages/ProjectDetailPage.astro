@@ -1,0 +1,263 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projectPageCopy } from "../../data/projects";
+import type { HomeLocale, HomePageData } from "../../types/home";
+import type { ProjectCatalogEntry } from "../../types/projects";
+import SiteHeader from "../navigation/SiteHeader.astro";
+import EvidenceGallery from "../media/EvidenceGallery.astro";
+import DocumentActionCard from "../media/DocumentActionCard.astro";
+import ExternalResourceAction from "../media/ExternalResourceAction.astro";
+import RelatedContentLink from "../media/RelatedContentLink.astro";
+import ProjectRail from "../sections/ProjectRail.astro";
+import { getProjectDetailPath, getProjectsArchivePath } from "../../lib/routes";
+
+interface Props {
+  locale: HomeLocale;
+  project: ProjectCatalogEntry;
+  homeData: HomePageData;
+}
+
+const { locale, project, homeData } = Astro.props;
+const copy = projectPageCopy[locale];
+const content = project.content[locale];
+const pathname = getProjectDetailPath(locale, project.slug);
+const metadataDescription = `${content.summary} ${content.evidenceDisclosure}`;
+const gallery = project.gallery?.[locale] ?? [];
+const documents = project.documents?.[locale] ?? [];
+const externalResources = project.externalResources?.[locale] ?? [];
+const related = project.related?.[locale] ?? [];
+const activities = project.activities ?? [];
+const activityHeading =
+  locale === "id" ? "Lima kegiatan terkait" : "Five related activities";
+const eyebrow =
+  project.status === "case-study"
+    ? locale === "id"
+      ? "Studi kasus proyek"
+      : "Project case study"
+    : copy.detail.eyebrow;
+---
+
+<BaseLayout
+  fixedWorkspace
+  metadata={{
+    locale,
+    title: `${content.title} — ${eyebrow} | Portfolio Owner`,
+    description: metadataDescription,
+    pathname,
+    indexable: true,
+  }}
+>
+  <div class="site-shell site-shell--home">
+    <SiteHeader
+      data={homeData}
+      navigationMode="route"
+      currentDestination="projects"
+      currentPathname={pathname}
+    />
+
+    <main
+      id="main-content"
+      class="home-main home-workspace"
+      data-workspace-ready="true"
+      data-active-view="projects"
+    >
+      <div class="home-opening">
+        <div class="home-opening__canvas home-workspace__stage">
+          <section
+            class="workspace-panel workspace-panel--standalone"
+            data-workspace-panel="standalone"
+            data-workspace-active="true"
+          >
+            <a
+              class="project-detail__back"
+              href={getProjectsArchivePath(locale)}
+            >
+              <span aria-hidden="true">←</span>
+              {copy.detail.backLabel}
+            </a>
+
+            <article class="project-detail">
+              <header class="project-detail__hero">
+                <div class="project-detail__orientation">
+                  <p class="project-page-hero__eyebrow">{eyebrow}</p>
+                  <h1>{content.title}</h1>
+                  {
+                    project.category && (
+                      <p class="project-detail__category">
+                        {project.category[locale]}
+                      </p>
+                    )
+                  }
+                  <p class="project-detail__summary">{content.summary}</p>
+                </div>
+              </header>
+
+              <div class="project-detail__narrative">
+                <section
+                  class="project-reading-surface"
+                  aria-labelledby="direction-heading"
+                >
+                  <h2 id="direction-heading">{copy.detail.directionHeading}</h2>
+                  <p>{content.direction}</p>
+                </section>
+
+                <section
+                  class="project-reading-surface"
+                  aria-labelledby="focus-heading"
+                >
+                  <h2 id="focus-heading">{copy.detail.focusHeading}</h2>
+                  <ul>
+                    {content.focusPoints.map((point) => <li>{point}</li>)}
+                  </ul>
+                </section>
+
+                <details
+                  class="project-reading-surface project-detail__disclosure"
+                >
+                  <summary>{copy.detail.limitationsHeading}</summary>
+                  <ul>
+                    {
+                      content.limitations.map((limitation) => (
+                        <li>{limitation}</li>
+                      ))
+                    }
+                  </ul>
+                </details>
+
+                {
+                  documents.length > 0 && (
+                    <section
+                      class="project-documents"
+                      aria-labelledby="documents-heading"
+                    >
+                      <h2 id="documents-heading">
+                        {copy.detail.evidenceTitle}
+                      </h2>
+                      <div class="project-documents__grid">
+                        {documents.map((doc) => (
+                          <DocumentActionCard document={doc} locale={locale} />
+                        ))}
+                      </div>
+                    </section>
+                  )
+                }
+
+                {
+                  externalResources.length > 0 && (
+                    <section
+                      class="project-resources"
+                      aria-labelledby="resources-heading"
+                    >
+                      <h2 id="resources-heading">{copy.detail.linksTitle}</h2>
+                      <div class="project-resources__grid">
+                        {externalResources.map((resource) => (
+                          <ExternalResourceAction
+                            resource={resource}
+                            locale={locale}
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  )
+                }
+
+                {
+                  gallery.length > 0 && (
+                    <EvidenceGallery
+                      id={`${project.slug}-gallery`}
+                      title={copy.detail.evidenceTitle}
+                      items={gallery}
+                      locale={locale}
+                      headingLevel={2}
+                    />
+                  )
+                }
+
+                {
+                  activities.length > 0 && (
+                    <section
+                      class="project-activities"
+                      aria-labelledby="activities-heading"
+                    >
+                      <h2 id="activities-heading">{activityHeading}</h2>
+                      <ul class="project-activities__list" role="list">
+                        {activities.map((act, idx) => {
+                          const actGallery = act.gallery?.[locale] ?? [];
+                          const sessionNumber = String(idx + 1).padStart(
+                            2,
+                            "0",
+                          );
+                          const sessionLabel =
+                            locale === "id"
+                              ? `SESI ${sessionNumber}`
+                              : `SESSION ${sessionNumber}`;
+                          return (
+                            <li class="project-activity">
+                              <div class="project-activity__header">
+                                <span class="project-activity__session-badge">
+                                  {sessionLabel}
+                                </span>
+                                <h3 class="project-activity__org-name">
+                                  {act.organization[locale]}
+                                </h3>
+                              </div>
+                              <div class="project-activity__body">
+                                {actGallery.length > 0 && (
+                                  <div class="project-activity__media-container">
+                                    <EvidenceGallery
+                                      id={`${act.id}-gallery`}
+                                      title={act.theme[locale]}
+                                      items={actGallery}
+                                      locale={locale}
+                                      headingLevel={4}
+                                      variant="collage"
+                                    />
+                                  </div>
+                                )}
+                                <div class="project-activity__sidebar-card">
+                                  <h4 class="project-activity__theme-title">
+                                    {act.theme[locale]}
+                                  </h4>
+                                  <div class="project-activity__badges">
+                                    <span class="project-activity__badge project-activity__badge--role">
+                                      {act.role[locale]}
+                                    </span>
+                                  </div>
+                                  <p class="project-activity__description">
+                                    {act.description[locale]}
+                                  </p>
+                                </div>
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </section>
+                  )
+                }
+
+                {
+                  related.length > 0 && (
+                    <section
+                      class="project-related"
+                      aria-labelledby="related-heading"
+                    >
+                      <h2 id="related-heading">{copy.detail.relatedHeading}</h2>
+                      <nav aria-label={copy.detail.relatedHeading}>
+                        {related.map((item) => (
+                          <RelatedContentLink item={item} locale={locale} />
+                        ))}
+                      </nav>
+                    </section>
+                  )
+                }
+              </div>
+            </article>
+          </section>
+        </div>
+
+        <ProjectRail data={homeData.projects} locale={locale} />
+      </div>
+    </main>
+  </div>
+</BaseLayout>

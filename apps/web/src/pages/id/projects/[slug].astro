@@ -1,0 +1,23 @@
+---
+import ProjectDetailPage from "../../../components/pages/ProjectDetailPage.astro";
+import { getSiteContent } from "../../../lib/sanity/loader";
+import type { HomePageData } from "../../../types/home";
+import type { ProjectCatalogEntry } from "../../../types/projects";
+
+export async function getStaticPaths() {
+  const content = await getSiteContent();
+  return content.projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project, homeData: content.homeData.id },
+  }));
+}
+
+interface Props {
+  project: ProjectCatalogEntry;
+  homeData: HomePageData;
+}
+
+const { project, homeData } = Astro.props;
+---
+
+<ProjectDetailPage locale="id" project={project} homeData={homeData} />

@@ -1,0 +1,145 @@
+---
+import {
+  buildResponsiveSrcSet,
+  isRenderableManagedImage,
+  normalizeFocalPoint,
+} from "../../lib/media/presentation";
+import type { ManagedImagePresentation } from "../../types/media";
+import type { HomeLocale } from "../../types/home";
+import { getMediaCopy } from "../../lib/media/copy";
+import MediaState from "./MediaState.astro";
+
+interface Props {
+  image: ManagedImagePresentation;
+  loading?: "eager" | "lazy";
+  missingTitle?: string;
+  missingMessage?: string;
+  locale?: HomeLocale;
+  displayMode?: "standard" | "thumbnail";
+  showCaption?: boolean;
+  showCredit?: boolean;
+  sizes?: string;
+}
+
+const {
+  image,
+  loading = "lazy",
+  locale = "en",
+  missingTitle,
+  missingMessage,
+  displayMode = "standard",
+  showCaption = true,
+  showCredit = true,
+  sizes,
+} = Astro.props;
+const copy = getMediaCopy(locale);
+const resolvedMissingTitle = missingTitle ?? copy.imageUnavailableTitle;
+const resolvedMissingMessage = missingMessage ?? copy.imageUnavailableMessage;
+const renderable = isRenderableManagedImage(image);
+const source = image.source.kind === "managed" ? image.source : undefined;
+const srcset = buildResponsiveSrcSet(
+  image,
+  displayMode === "thumbnail" ? 960 : undefined,
+);
+const focalPoint = normalizeFocalPoint(image.focalPoint);
+const sourceAspectRatio =
+  source && source.width > 0 && source.height > 0
+    ? source.width / source.height
+    : undefined;
+const sourceOrientation = sourceAspectRatio
+  ? sourceAspectRatio > 1.12
+    ? "landscape"
+    : sourceAspectRatio < 0.88
+      ? "portrait"
+      : "square"
+  : undefined;
+const fallbackSource =
+  displayMode === "thumbnail" && image.responsiveVariants?.length
+    ? image.responsiveVariants[0].src
+    : source?.src;
+---
+
+<figure
+  class:list={[
+    "managed-image",
+    `managed-image--${displayMode}`,
+    sourceOrientation && `managed-image--${sourceOrientation}`,
+    { "managed-image--missing": !renderable },
+  ]}
+  data-managed-image={renderable ? "ready" : undefined}
+  style={`--media-position-x: ${focalPoint.x}%; --media-position-y: ${focalPoint.y}%;${source ? ` --media-aspect-ratio: ${source.width} / ${source.height};` : ""}`}
+>
+  {
+    renderable && source ? (
+      <>
+        <img
+          src={fallbackSource}
+          srcset={srcset}
+          sizes={
+            srcset
+              ? (sizes ?? image.sizes ?? "(min-width: 64rem) 50vw, 100vw")
+              : undefined
+          }
+          width={source.width}
+          height={source.height}
+          alt={image.decorative ? "" : image.alt}
+          loading={loading}
+          decoding="async"
+          data-managed-image-source
+        />
+        <div data-managed-image-fallback hidden>
+          <MediaState
+            title={resolvedMissingTitle}
+            message={resolvedMissingMessage}
+            variant="unavailable"
+          />
+        </div>
+      </>
+    ) : (
+      <MediaState
+        title={resolvedMissingTitle}
+        message={resolvedMissingMessage}
+        variant={image.availability === "missing" ? "missing" : "unavailable"}
+      />
+    )
+  }
+  {
+    renderable &&
+      ((showCaption && image.caption) || (showCredit && image.credit)) && (
+        <figcaption>
+          {showCaption && image.caption && <span>{image.caption}</span>}
+          {showCredit && image.credit && (
+            <small>
+              {copy.credit}: {image.credit}
+            </small>
+          )}
+        </figcaption>
+      )
+  }
+</figure>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>('[data-managed-image="ready"]')
+    .forEach((figure) => {
+      if (figure.dataset.runtimeFallbackBound === "true") return;
+      figure.dataset.runtimeFallbackBound = "true";
+
+      const image = figure.querySelector<HTMLImageElement>(
+        "[data-managed-image-source]",
+      );
+      const fallback = figure.querySelector<HTMLElement>(
+        "[data-managed-image-fallback]",
+      );
+      const showFallback = () => {
+        if (!image || image.hidden) return;
+        image.hidden = true;
+        if (fallback) fallback.hidden = false;
+        figure.querySelector("figcaption")?.remove();
+        figure.classList.add("managed-image--missing");
+      };
+
+      image?.addEventListener("error", showFallback);
+      if (image?.complete && image.naturalWidth === 0) showFallback();
+    });
+</script>

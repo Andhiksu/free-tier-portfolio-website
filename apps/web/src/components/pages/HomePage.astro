@@ -1,0 +1,107 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import AboutWorkspace from "../sections/AboutWorkspace.astro";
+import CredentialWorkspace from "../sections/CredentialWorkspace.astro";
+import ExperienceHighlights from "../sections/ExperienceHighlights.astro";
+import FeaturedProjects from "../sections/FeaturedProjects.astro";
+import HeroSection from "../sections/HeroSection.astro";
+import ProjectRail from "../sections/ProjectRail.astro";
+import SiteHeader from "../navigation/SiteHeader.astro";
+import type { HomePageData } from "../../types/home";
+import type {
+  ValidatedCredential,
+  ValidatedExperience,
+} from "../../lib/sanity/types";
+import { getLocalizedHomepagePath } from "../../lib/routes";
+
+interface Props {
+  data: HomePageData;
+  experiences?: readonly ValidatedExperience[];
+  credentials?: readonly ValidatedCredential[];
+}
+
+const { data, experiences = [], credentials = [] } = Astro.props;
+---
+
+<BaseLayout
+  metadata={{
+    locale: data.lang,
+    title: data.title,
+    description: data.description,
+    pathname: getLocalizedHomepagePath(data.lang),
+    indexable: data.indexable,
+  }}
+>
+  <div class="site-shell site-shell--home">
+    <SiteHeader
+      data={data}
+      navigationMode="workspace"
+      currentDestination="home"
+    />
+
+    <main
+      id="main-content"
+      class="home-main home-workspace"
+      data-home-workspace
+      data-active-view="home"
+    >
+      <div class="home-opening">
+        <div class="home-opening__canvas home-workspace__stage">
+          <section
+            class="workspace-panel workspace-panel--home"
+            id="home"
+            aria-labelledby="page-title"
+            data-workspace-panel="home"
+            data-workspace-active="true"
+          >
+            <HeroSection data={data.hero} />
+          </section>
+
+          <div
+            class="workspace-panel workspace-panel--about"
+            id="about"
+            data-workspace-panel="about"
+          >
+            <AboutWorkspace
+              locale={data.lang}
+              identity={data.siteLabel}
+              portrait={data.about.portrait}
+              resumes={data.about.resumes}
+            />
+          </div>
+
+          <div
+            class="workspace-panel workspace-panel--experience"
+            data-workspace-panel="experience"
+          >
+            <ExperienceHighlights
+              data={data.journey}
+              records={experiences}
+              locale={data.lang}
+            />
+          </div>
+
+          <div
+            class="workspace-panel workspace-panel--projects"
+            data-workspace-panel="projects"
+          >
+            <FeaturedProjects data={data.projects} variant="workspace" />
+          </div>
+
+          <div
+            class="workspace-panel workspace-panel--credentials"
+            data-workspace-panel="credentials"
+          >
+            <CredentialWorkspace records={credentials} locale={data.lang} />
+          </div>
+        </div>
+
+        <ProjectRail data={data.projects} locale={data.lang} />
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<script>
+  import "../../scripts/home-workspace";
+</script>

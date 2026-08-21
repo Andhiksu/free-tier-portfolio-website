@@ -1,0 +1,75 @@
+---
+import type { ProjectPreview } from "../../types/projects";
+import ManagedImage from "../media/ManagedImage.astro";
+
+interface Props {
+  item: ProjectPreview;
+  index: number;
+  evidenceLabel: string;
+  variant?: "preview" | "workspace" | "archive";
+}
+
+const { item, index, evidenceLabel, variant = "archive" } = Astro.props;
+const prominence = index === 0 ? "featured" : "supporting";
+const className = `project-card project-card--${prominence} project-card--${variant}`;
+---
+
+{
+  item.href && item.linkLabel ? (
+    <a class={className} href={item.href} aria-label={item.linkLabel}>
+      {item.cover ? (
+        <ManagedImage
+          image={item.cover}
+          displayMode="thumbnail"
+          showCaption={false}
+          showCredit={false}
+          sizes="(min-width: 64rem) 24rem, (min-width: 48rem) 50vw, 100vw"
+        />
+      ) : (
+        <div class="project-card__visual" aria-hidden="true">
+          <span class="project-card__visual-line" />
+        </div>
+      )}
+
+      <div class="project-card__content">
+        <h3 class="project-card__heading">{item.title}</h3>
+        <p class="project-card__summary">{item.summary}</p>
+
+        <dl class="project-card__status">
+          <div>
+            <dt>{evidenceLabel}</dt>
+            <dd>{item.evidenceValue}</dd>
+          </div>
+        </dl>
+      </div>
+    </a>
+  ) : (
+    <article class={className}>
+      {item.cover ? (
+        <ManagedImage
+          image={item.cover}
+          displayMode="thumbnail"
+          showCaption={false}
+          showCredit={false}
+          sizes="(min-width: 64rem) 24rem, (min-width: 48rem) 50vw, 100vw"
+        />
+      ) : (
+        <div class="project-card__visual" aria-hidden="true">
+          <span class="project-card__visual-line" />
+        </div>
+      )}
+
+      <div class="project-card__content">
+        <h3 class="project-card__heading">{item.title}</h3>
+        <p class="project-card__summary">{item.summary}</p>
+
+        <dl class="project-card__status">
+          <div>
+            <dt>{evidenceLabel}</dt>
+            <dd>{item.evidenceValue}</dd>
+          </div>
+        </dl>
+      </div>
+    </article>
+  )
+}

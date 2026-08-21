@@ -1,0 +1,60 @@
+---
+import type { HomePageData } from "../../types/home";
+
+interface Props {
+  data: HomePageData["hero"];
+}
+
+const { data } = Astro.props;
+const normalizedRoles = data.targetRoles.items.map((role) =>
+  role === "Business Intelligence Analyst"
+    ? "Business Intelligence & Strategy"
+    : role,
+);
+const preferredRoleOrder = [
+  "Data Analyst",
+  "AI/ML Engineer",
+  "Data Scientist",
+  "Business Intelligence & Strategy",
+] as const;
+const displayRoles = [
+  ...preferredRoleOrder.filter((role) => normalizedRoles.includes(role)),
+  ...normalizedRoles.filter(
+    (role) =>
+      !preferredRoleOrder.includes(role as (typeof preferredRoleOrder)[number]),
+  ),
+];
+---
+
+<section class="hero-section" aria-labelledby="page-title">
+  <div class="hero-section__content">
+    <h1 class="hero-section__heading" id="page-title">
+      {
+        data.headingLines.map((line) => (
+          <span class="hero-section__heading-line">{line}</span>
+        ))
+      }
+    </h1>
+    <p class="hero-section__supporting-copy">{data.supportingCopy}</p>
+
+    <div class="hero-section__roles">
+      <p class="hero-section__roles-label" id="target-roles-label">
+        {data.targetRoles.label}
+      </p>
+      <ul class="hero-section__role-list" aria-labelledby="target-roles-label">
+        {
+          displayRoles.map((role) => (
+            <li class="hero-section__role-item">{role}</li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="hero-section__collage" aria-hidden="true">
+      <span class="hero-section__collage-tile"></span>
+      <span class="hero-section__collage-tile"></span>
+      <span class="hero-section__collage-tile"></span>
+      <span class="hero-section__collage-tile"></span>
+    </div>
+  </div>
+</section>

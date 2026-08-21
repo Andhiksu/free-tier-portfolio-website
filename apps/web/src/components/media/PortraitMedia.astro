@@ -1,0 +1,27 @@
+---
+import { normalizeFocalPoint } from "../../lib/media/presentation";
+import type { ManagedImagePresentation } from "../../types/media";
+import type { HomeLocale } from "../../types/home";
+import ManagedImage from "./ManagedImage.astro";
+
+interface Props {
+  image: ManagedImagePresentation;
+  locale?: HomeLocale;
+}
+
+const { image, locale = "en" } = Astro.props;
+const focalPoint = normalizeFocalPoint(image.focalPoint);
+---
+
+<div
+  class="portrait-media"
+  style={`--media-position-x: ${focalPoint.x}%; --media-position-y: ${focalPoint.y}%;`}
+>
+  <ManagedImage
+    image={image}
+    loading="eager"
+    locale={locale}
+    showCaption={false}
+    showCredit={false}
+  />
+</div>

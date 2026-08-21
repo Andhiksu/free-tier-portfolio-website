@@ -1,0 +1,124 @@
+---
+import type { HomePageData } from "../../types/home";
+import EvidenceGallery from "../media/EvidenceGallery.astro";
+import ExternalResourceAction from "../media/ExternalResourceAction.astro";
+import RelatedContentLink from "../media/RelatedContentLink.astro";
+import { getHomepageWorkspaceHref } from "../../lib/routes";
+
+interface Props {
+  data: HomePageData["journey"];
+  locale?: HomePageData["lang"];
+}
+
+const { data, locale = "en" } = Astro.props;
+const headingId = `${data.id}-heading`;
+const relatedProjectsLabel =
+  locale === "id" ? "Proyek terkait" : "Related projects";
+---
+
+<section class="journey-section" id={data.id} aria-labelledby={headingId}>
+  <div class="journey-section__header">
+    <h2 class="journey-section__heading" id={headingId}>{data.heading}</h2>
+  </div>
+
+  <ol class="journey-section__list" role="list">
+    {
+      data.chapters.map((chapter, index) => (
+        <li class="journey-section__chapter record-detail" id={chapter.id}>
+          <div class="journey-section__entry">
+            <a
+              class="record-detail__back"
+              href={getHomepageWorkspaceHref(locale, "experience")}
+            >
+              <span aria-hidden="true">←</span>
+              {locale === "id" ? "Kembali ke Pengalaman" : "Back to Experience"}
+            </a>
+            <h3 class="journey-section__chapter-heading">{chapter.label}</h3>
+            {chapter.organization && (
+              <p class="journey-section__organization">
+                {chapter.organization}
+              </p>
+            )}
+            {(chapter.employmentType || chapter.location) && (
+              <p class="journey-section__meta">
+                {[chapter.employmentType, chapter.location]
+                  .filter(Boolean)
+                  .join(" • ")}
+              </p>
+            )}
+            {chapter.dateLabel && (
+              <p class="journey-section__date">{chapter.dateLabel}</p>
+            )}
+            <p class="journey-section__chapter-summary">{chapter.summary}</p>
+            {chapter.responsibilities &&
+              chapter.responsibilities.length > 0 && (
+                <details class="journey-section__disclosure">
+                  <summary class="journey-section__disclosure-summary">
+                    {locale === "id" ? "Tanggung jawab" : "Responsibilities"}
+                  </summary>
+                  <ul class="journey-section__responsibilities" role="list">
+                    {chapter.responsibilities.map((r) => (
+                      <li>{r}</li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+            {chapter.achievements && chapter.achievements.length > 0 && (
+              <details class="journey-section__disclosure">
+                <summary class="journey-section__disclosure-summary">
+                  {locale === "id" ? "Pencapaian" : "Achievements"}
+                </summary>
+                <ul class="journey-section__achievements" role="list">
+                  {chapter.achievements.map((a) => (
+                    <li>{a}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
+            {chapter.skills && chapter.skills.length > 0 && (
+              <ul class="journey-section__skills" role="list">
+                {chapter.skills.map((skill) => (
+                  <li>{skill}</li>
+                ))}
+              </ul>
+            )}
+            {chapter.gallery && chapter.gallery.length > 0 && (
+              <EvidenceGallery
+                id={`${chapter.id ?? `journey-${index}`}-gallery`}
+                title={
+                  locale === "id"
+                    ? `Media untuk ${chapter.label}`
+                    : `Media for ${chapter.label}`
+                }
+                items={chapter.gallery}
+                locale={locale}
+                headingLevel={4}
+                initialCount={2}
+                variant="collage"
+                showHeading={false}
+              />
+            )}
+            {chapter.resources && chapter.resources.length > 0 && (
+              <div class="journey-section__resources">
+                {chapter.resources.map((resource) => (
+                  <ExternalResourceAction
+                    resource={resource}
+                    locale={locale}
+                    headingLevel={4}
+                  />
+                ))}
+              </div>
+            )}
+            {chapter.related && chapter.related.length > 0 && (
+              <nav aria-label={relatedProjectsLabel}>
+                {chapter.related.map((item) => (
+                  <RelatedContentLink item={item} locale={locale} />
+                ))}
+              </nav>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>

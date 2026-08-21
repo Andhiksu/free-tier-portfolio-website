@@ -1,0 +1,103 @@
+---
+import "../styles/global.css";
+import {
+  buildPageMetadata,
+  serializeStructuredData,
+  type PageMetadataInput,
+} from "../lib/metadata";
+import ImageLightbox from "../components/media/ImageLightbox.astro";
+
+interface Props {
+  metadata: PageMetadataInput;
+  fixedWorkspace?: boolean;
+}
+
+const { metadata: metadataInput, fixedWorkspace = false } = Astro.props;
+const metadata = buildPageMetadata(metadataInput);
+const skipLinkLabel =
+  metadata.locale === "id" ? "Lewati ke konten utama" : "Skip to main content";
+---
+
+<!doctype html>
+<html
+  lang={metadata.locale}
+  data-theme="light"
+  data-home-workspace-ready={fixedWorkspace ? "" : undefined}
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content={metadata.description} />
+    <title>{metadata.title}</title>
+    {
+      metadata.canonicalUrl && (
+        <link rel="canonical" href={metadata.canonicalUrl} />
+      )
+    }
+    {
+      metadata.alternates.map((alternate) => (
+        <link
+          rel="alternate"
+          hreflang={alternate.locale}
+          href={alternate.href}
+        />
+      ))
+    }
+    {metadata.robots && <meta name="robots" content={metadata.robots} />}
+    <meta property="og:title" content={metadata.openGraph.title} />
+    <meta property="og:description" content={metadata.openGraph.description} />
+    <meta property="og:type" content={metadata.openGraph.type} />
+    {
+      metadata.openGraph.url && (
+        <meta property="og:url" content={metadata.openGraph.url} />
+      )
+    }
+    <meta property="og:image" content={metadata.openGraph.image} />
+    <meta property="og:locale" content={metadata.openGraph.locale} />
+    {
+      metadata.openGraph.alternateLocales.map((locale) => (
+        <meta property="og:locale:alternate" content={locale} />
+      ))
+    }
+    <meta name="twitter:card" content={metadata.twitter.card} />
+    <meta name="twitter:title" content={metadata.twitter.title} />
+    <meta name="twitter:description" content={metadata.twitter.description} />
+    <meta name="twitter:image" content={metadata.twitter.image} />
+    {
+      metadata.structuredData.map((schema) => (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={serializeStructuredData(schema)}
+        />
+      ))
+    }
+    <script is:inline>
+      (() => {
+        const storageKey = "free-tier-portfolio-website-theme";
+        let theme = "light";
+
+        try {
+          const storedTheme = window.localStorage.getItem(storageKey);
+
+          if (storedTheme === "light" || storedTheme === "dark") {
+            theme = storedTheme;
+          }
+        } catch {
+          theme = "light";
+        }
+
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">{skipLinkLabel}</a>
+    <slot />
+    <ImageLightbox locale={metadata.locale} />
+  </body>
+</html>

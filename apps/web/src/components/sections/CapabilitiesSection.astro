@@ -1,0 +1,39 @@
+---
+import type { HomePageData } from "../../types/home";
+
+interface Props {
+  data: HomePageData["capabilities"];
+}
+
+const { data } = Astro.props;
+const headingId = `${data.id}-heading`;
+---
+
+<section
+  class="capabilities-section home-section"
+  id={data.id}
+  aria-labelledby={headingId}
+>
+  <div class="capabilities-section__header">
+    <h2 class="capabilities-section__heading" id={headingId}>{data.heading}</h2>
+    <p class="capabilities-section__description">{data.description}</p>
+  </div>
+
+  <div class="capabilities-section__field">
+    <span class="capabilities-section__field-core" aria-hidden="true"></span>
+    <ul class="capabilities-section__list" role="list">
+      {
+        data.groups.map((group) => (
+          <li class="capabilities-section__item">
+            <article class="capability-card">
+              <h3 class="capability-card__heading">{group.label}</h3>
+              <p class="capability-card__summary">{group.summary}</p>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <slot />
+</section>

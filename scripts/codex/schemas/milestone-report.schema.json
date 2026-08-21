@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Portfolio milestone report",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "milestone": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": ["completed", "human_gate_required", "blocked", "failed"]
+    },
+    "verified_baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "branch": { "type": "string", "minLength": 1 },
+        "head_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "expected_main_sha": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "worktree_clean": { "type": "boolean" },
+        "summary": { "type": "string", "minLength": 1 }
+      },
+      "required": [
+        "branch",
+        "head_sha",
+        "expected_main_sha",
+        "worktree_clean",
+        "summary"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "changed_files": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "status": {
+            "type": "string",
+            "enum": ["passed", "failed", "not_applicable"]
+          },
+          "details": { "type": "string", "minLength": 1 }
+        },
+        "required": ["name", "status", "details"]
+      }
+    },
+    "review_findings_accepted": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "review_findings_rejected": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "review_findings_deferred": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "unresolved_risks": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "human_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "required": { "type": "boolean" },
+        "action": { "type": ["string", "null"] },
+        "reason": { "type": ["string", "null"] }
+      },
+      "required": ["required", "action", "reason"]
+    },
+    "next_step": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "milestone",
+    "status",
+    "verified_baseline",
+    "summary",
+    "changed_files",
+    "checks",
+    "review_findings_accepted",
+    "review_findings_rejected",
+    "review_findings_deferred",
+    "unresolved_risks",
+    "human_gate",
+    "next_step"
+  ]
+}

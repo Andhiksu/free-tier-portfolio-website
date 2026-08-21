@@ -1,0 +1,12 @@
+---
+import MediaLibraryPage from "../../../components/pages/MediaLibraryPage.astro";
+import { getSiteContent } from "../../../lib/sanity/loader";
+
+const content = await getSiteContent();
+---
+
+<MediaLibraryPage
+  locale="id"
+  homeData={content.homeData.id}
+  items={content.media.items}
+/>

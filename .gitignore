@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+
+# Dependencies
+node_modules/
+.pnpm-store/
+__pycache__/
+*.py[cod]
+
+# Build output
+dist/
+.astro/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# Local platform state
+.wrangler/
+.sanity/
+
+# Private source media
+assets-source/private-originals/
+/Asset/
+/content-source/.private/
+
+# Local QA artifacts
+/.artifacts/

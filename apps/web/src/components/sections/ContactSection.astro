@@ -1,0 +1,41 @@
+---
+import type { HomePageData } from "../../types/home";
+import Icon from "../ui/Icon.astro";
+
+interface Props {
+  data: HomePageData["contact"];
+}
+
+const { data } = Astro.props;
+const headingId = `${data.id}-heading`;
+---
+
+<section
+  class="contact-section home-section"
+  id={data.id}
+  aria-labelledby={headingId}
+>
+  <div class="contact-section__content">
+    <h2 class="contact-section__heading" id={headingId}>{data.heading}</h2>
+    <p class="contact-section__copy">{data.copy}</p>
+  </div>
+
+  <ul class="contact-section__links" role="list">
+    {
+      data.links.map((link) => (
+        <li class="contact-section__link-item">
+          <a
+            class={`contact-section__link contact-section__link--${link.emphasis}`}
+            href={link.href}
+          >
+            <Icon name="external" class="contact-section__link-icon" />
+            <span class="contact-section__link-text">
+              <span class="contact-section__link-label">{link.label}</span>
+              <span class="contact-section__disclosure">{link.disclosure}</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

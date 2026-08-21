@@ -1,0 +1,17 @@
+---
+import type { HomePageData } from "../../types/home";
+
+interface Props {
+  data: HomePageData["footer"];
+}
+
+const { data } = Astro.props;
+const locale = Astro.url.pathname.startsWith("/id/") ? "id" : "en";
+---
+
+<footer class="site-footer">
+  <p>{data.copy}</p>
+  <a href={`/${locale}/media/`}>
+    {locale === "id" ? "Pustaka media & bukti" : "Media & evidence library"}
+  </a>
+</footer>

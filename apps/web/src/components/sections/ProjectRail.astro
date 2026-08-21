@@ -1,0 +1,137 @@
+---
+import type { HomePageData } from "../../types/home";
+
+interface Props {
+  data: HomePageData["projects"];
+  locale: HomePageData["lang"];
+  asFragment?: boolean;
+}
+
+const { data, locale, asFragment = false } = Astro.props;
+const headingId = `${data.id}-rail-heading`;
+type RailProject = {
+  title: string;
+  href?: HomePageData["projects"]["items"][number]["href"];
+  railLabel: string;
+};
+const definitions = [
+  {
+    slug: "computer-vision-applied-ai",
+    label: {
+      en: "Computer Vision Project",
+      id: "Proyek Computer Vision",
+    },
+  },
+  {
+    slug: "language-text-intelligence",
+    label: {
+      en: "NLP, LLM Project",
+      id: "Proyek NLP, LLM",
+    },
+  },
+  {
+    slug: "analytics-decision-support",
+    label: {
+      en: "Data Visualization, Power BI",
+      id: "Visualisasi Data, Power BI",
+    },
+  },
+  {
+    slug: "digital-media-analytics-training-initiative",
+    label: {
+      en: "Trainer & Speaker",
+      id: "Pelatih & Pembicara",
+    },
+  },
+] as const;
+const projects: RailProject[] = definitions.flatMap((definition) => {
+  const project = data.items.find((item) =>
+    item.href?.includes(`/projects/${definition.slug}/`),
+  );
+
+  return project
+    ? [
+        {
+          title: project.title,
+          href: project.href,
+          railLabel: definition.label[locale],
+        },
+      ]
+    : [];
+});
+---
+
+{
+  asFragment ? (
+    <div class="project-rail" aria-labelledby={headingId}>
+      <div class="project-rail__header">
+        <h2 id={headingId}>{data.heading}</h2>
+      </div>
+
+      <ol class="project-rail__list">
+        {projects.map((project, index) => (
+          <li class="project-rail__item">
+            {project.href ? (
+              <a class="project-rail__link" href={project.href}>
+                <span class="project-rail__index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span class="project-rail__content">
+                  <span class="project-rail__title">{project.title}</span>
+                  <span class="project-rail__status">{project.railLabel}</span>
+                </span>
+              </a>
+            ) : (
+              <article class="project-rail__link">
+                <span class="project-rail__index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span class="project-rail__content">
+                  <span class="project-rail__title">{project.title}</span>
+                  <span class="project-rail__status">{project.railLabel}</span>
+                </span>
+              </article>
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+  ) : (
+    <aside
+      class="home-opening__side home-workspace__perspective project-rail"
+      aria-labelledby={headingId}
+    >
+      <div class="project-rail__header">
+        <h2 id={headingId}>{data.heading}</h2>
+      </div>
+
+      <ol class="project-rail__list">
+        {projects.map((project, index) => (
+          <li class="project-rail__item">
+            {project.href ? (
+              <a class="project-rail__link" href={project.href}>
+                <span class="project-rail__index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span class="project-rail__content">
+                  <span class="project-rail__title">{project.title}</span>
+                  <span class="project-rail__status">{project.railLabel}</span>
+                </span>
+              </a>
+            ) : (
+              <article class="project-rail__link">
+                <span class="project-rail__index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span class="project-rail__content">
+                  <span class="project-rail__title">{project.title}</span>
+                  <span class="project-rail__status">{project.railLabel}</span>
+                </span>
+              </article>
+            )}
+          </li>
+        ))}
+      </ol>
+    </aside>
+  )
+}

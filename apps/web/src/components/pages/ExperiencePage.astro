@@ -1,0 +1,126 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type {
+  HomeJourneyChapter,
+  HomeLocale,
+  HomePageData,
+} from "../../types/home";
+import type { ValidatedExperience } from "../../lib/sanity/types";
+import { getExperienceArchivePath } from "../../lib/routes";
+import SiteHeader from "../navigation/SiteHeader.astro";
+import CareerJourney from "../sections/CareerJourney.astro";
+import ProjectRail from "../sections/ProjectRail.astro";
+
+interface Props {
+  locale: HomeLocale;
+  homeData: HomePageData;
+  experiences: readonly ValidatedExperience[];
+}
+
+const { locale, homeData, experiences } = Astro.props;
+const pathname = getExperienceArchivePath(locale);
+const copy =
+  locale === "id"
+    ? {
+        eyebrow: "Pengalaman",
+        title: "Pengalaman profesional",
+        description:
+          "Lima peran terpilih yang menghubungkan data, strategi, rekayasa, operasi, dan produksi media.",
+        listTitle: "Riwayat pengalaman",
+        empty: "Rincian pengalaman belum tersedia.",
+      }
+    : {
+        eyebrow: "Experience",
+        title: "Professional experience",
+        description:
+          "Five selected roles connecting data, strategy, engineering, operations, and media production.",
+        listTitle: "Experience record",
+        empty: "Experience details are not available yet.",
+      };
+const formatDate = (value: string | undefined) =>
+  value
+    ? new Intl.DateTimeFormat(locale === "id" ? "id-ID" : "en-US", {
+        month: "short",
+        year: "numeric",
+        timeZone: "UTC",
+      }).format(new Date(`${value}T00:00:00Z`))
+    : undefined;
+const chapters: readonly HomeJourneyChapter[] = experiences
+  .filter((item) => item.visibility === "public")
+  .map((item) => ({
+    id: item.id,
+    label: item.role[locale],
+    organization: item.organization,
+    employmentType: item.employmentType,
+    location: item.location?.[locale],
+    dateLabel: [formatDate(item.startDate), formatDate(item.endDate)]
+      .filter(Boolean)
+      .join(" — "),
+    summary: item.summary[locale],
+    responsibilities: item.responsibilities.map((entry) => entry[locale]),
+    achievements: item.achievements.map((entry) => entry[locale]),
+    skills: item.skills,
+    gallery: item.gallery[locale],
+    resources: item.resources[locale],
+    related: item.related[locale],
+  }));
+---
+
+<BaseLayout
+  fixedWorkspace
+  metadata={{
+    locale,
+    title: `${copy.title} — Portfolio Owner`,
+    description: copy.description,
+    pathname,
+    indexable: true,
+  }}
+>
+  <div class="site-shell site-shell--home">
+    <SiteHeader
+      data={homeData}
+      navigationMode="route"
+      currentDestination="experience"
+      currentPathname={pathname}
+    />
+    <main
+      id="main-content"
+      class="home-main home-workspace"
+      data-workspace-ready="true"
+      data-active-view="experience"
+    >
+      <div class="home-opening">
+        <div class="home-opening__canvas home-workspace__stage">
+          <section
+            class="workspace-panel workspace-panel--standalone"
+            data-workspace-panel="standalone"
+            data-workspace-active="true"
+          >
+            <header class="content-page-hero">
+              <p>{copy.eyebrow}</p>
+              <h1>{copy.title}</h1>
+              <p>{copy.description}</p>
+            </header>
+            {
+              chapters.length > 0 ? (
+                <CareerJourney
+                  data={{
+                    id: "journey",
+                    heading: copy.listTitle,
+                    description: copy.description,
+                    chapters,
+                  }}
+                  locale={locale}
+                />
+              ) : (
+                <p class="content-page-empty">{copy.empty}</p>
+              )
+            }
+          </section>
+        </div>
+
+        <ProjectRail data={homeData.projects} locale={locale} />
+      </div>
+    </main>
+  </div>
+</BaseLayout>

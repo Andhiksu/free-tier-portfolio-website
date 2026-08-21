@@ -1,0 +1,21 @@
+---
+interface Props {
+  title: string;
+  copy: string;
+  variant?: "evidence" | "empty" | "incomplete" | "unavailable";
+  headingLevel?: "h2" | "h3";
+}
+
+const {
+  title,
+  copy,
+  variant = "unavailable",
+  headingLevel = "h3",
+} = Astro.props;
+const Heading = headingLevel;
+---
+
+<section class={`project-state project-state--${variant}`}>
+  <Heading>{title}</Heading>
+  <p>{copy}</p>
+</section>

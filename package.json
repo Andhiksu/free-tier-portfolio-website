@@ -1,0 +1,39 @@
+{
+  "name": "free-tier-portfolio-website",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": ">=24.18.0 <25",
+    "pnpm": "11.11.0"
+  },
+  "scripts": {
+    "dev": "pnpm dev:web",
+    "dev:web": "pnpm --filter @portfolio-reference/web dev",
+    "dev:studio": "pnpm --filter @portfolio-reference/studio dev",
+    "build": "pnpm build:web && pnpm build:studio",
+    "build:web": "pnpm --filter @portfolio-reference/web build",
+    "build:studio": "pnpm --filter @portfolio-reference/studio build",
+    "lint": "pnpm lint:repo && pnpm lint:studio",
+    "lint:repo": "eslint . --max-warnings=0",
+    "lint:studio": "pnpm --filter @portfolio-reference/studio lint",
+    "schema:validate": "pnpm --filter @portfolio-reference/studio schema:validate",
+    "starter:validate": "node scripts/validate-starter-input.mjs",
+    "test": "pnpm --filter @portfolio-reference/web test",
+    "type-check": "pnpm type-check:web && pnpm type-check:studio",
+    "type-check:web": "pnpm --filter @portfolio-reference/web type-check",
+    "type-check:studio": "pnpm --filter @portfolio-reference/studio type-check",
+    "verify": "node scripts/verify.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.4",
+    "eslint": "9.39.4",
+    "eslint-plugin-astro": "1.7.0",
+    "prettier": "3.9.4",
+    "prettier-plugin-astro": "0.14.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.63.0"
+  }
+}

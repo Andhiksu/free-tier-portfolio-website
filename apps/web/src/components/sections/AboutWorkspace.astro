@@ -1,0 +1,155 @@
+---
+import type { HomeLocale } from "../../types/home";
+import type {
+  DocumentPresentation,
+  ManagedImagePresentation,
+} from "../../types/media";
+import {
+  isPublicationReady,
+  isSafePublicPath,
+} from "../../lib/media/presentation";
+import PortraitMedia from "../media/PortraitMedia.astro";
+import Icon from "../ui/Icon.astro";
+
+interface Props {
+  locale: HomeLocale;
+  identity: string;
+  portrait?: ManagedImagePresentation;
+  resumes?: readonly DocumentPresentation[];
+}
+
+const { locale, identity, portrait, resumes = [] } = Astro.props;
+const resumeLabels = ["Resume (English)", "Resume (Bahasa Indonesia)"] as const;
+const resumeActions = resumes.flatMap((document, index) => {
+  if (!isPublicationReady(document) || !isSafePublicPath(document.href)) {
+    return [];
+  }
+
+  return [
+    {
+      href: document.href,
+      label: resumeLabels[index] ?? `Resume (${index + 1})`,
+      title: document.title,
+    },
+  ];
+});
+const socialLabel =
+  locale === "id" ? "Tautan profesional" : "Professional links";
+const opensNewTab =
+  locale === "id" ? "terbuka di tab baru" : "opens in a new tab";
+const socialLinks = [
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/example-profile/",
+    external: true,
+  },
+  {
+    id: "github",
+    label: "GitHub",
+    href: "https://github.com/example-user",
+    external: true,
+  },
+  {
+    id: "email",
+    label: "Email",
+    href: "mailto:hello@example.com",
+    external: false,
+  },
+] as const;
+const copy = {
+  id: {
+    rolesLabel: "Peran yang Diminati",
+    roles:
+      "Data Analyst · Data Scientist · AI/ML Engineer · Business Intelligence & Strategy",
+    paragraphs: [
+      "Hai! Saya Portfolio Owner. Ini adalah contoh profil anonim yang menunjukkan bagaimana cerita singkat pemilik portofolio dapat disusun tanpa membagikan data pribadi.",
+      "Bagian ini dapat digunakan untuk menjelaskan pengalaman, kemampuan utama, dan perubahan karier menggunakan konten contoh. Ganti seluruh paragraf sebelum menerbitkan situs Anda.",
+      "Gunakan penutup ini untuk mengundang kolaborasi melalui kanal kontak yang memang ingin Anda publikasikan.",
+    ],
+  },
+  en: {
+    rolesLabel: "Interest Roles",
+    roles:
+      "Data Analyst · Data Scientist · AI/ML Engineer · Business Intelligence & Strategy",
+    paragraphs: [
+      "Hi! I'm Portfolio Owner. This anonymous profile shows how a short portfolio introduction can be structured without publishing personal data.",
+      "Use this section to describe experience, core skills, and a career transition with fictional sample content. Replace every paragraph before launching your own site.",
+      "Use this closing paragraph to invite collaboration through only the contact channels you intentionally choose to publish.",
+    ],
+  },
+} as const;
+const localizedCopy = copy[locale];
+---
+
+<section class="about-workspace" aria-labelledby="about-workspace-heading">
+  <div class="about-workspace__profile">
+    {
+      portrait ? (
+        <PortraitMedia image={portrait} locale={locale} />
+      ) : (
+        <div class="hero-section__portrait-fallback" aria-hidden="true">
+          AS
+        </div>
+      )
+    }
+
+    {
+      resumeActions.length > 0 && (
+        <div class="about-workspace__documents">
+          {resumeActions.map((resume) => (
+            <a
+              class="about-workspace__resume-link"
+              href={resume.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span class="about-workspace__resume-icon" aria-hidden="true">
+                <Icon name="document" />
+              </span>
+              <span>{resume.label}</span>
+              <span class="visually-hidden">
+                : {resume.title} ({opensNewTab})
+              </span>
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    <nav class="about-workspace__socials" aria-label={socialLabel}>
+      <ul role="list">
+        {
+          socialLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noreferrer" : undefined}
+                data-social={link.id}
+              >
+                <Icon name={link.id} />
+                <span>{link.label}</span>
+                {link.external && (
+                  <span class="visually-hidden"> ({opensNewTab})</span>
+                )}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <div class="about-workspace__narrative">
+    <header class="about-workspace__identity">
+      <h2 id="about-workspace-heading">{identity}</h2>
+      <p class="about-workspace__roles-label">{localizedCopy.rolesLabel}</p>
+      <p class="about-workspace__roles">{localizedCopy.roles}</p>
+    </header>
+
+    <div class="about-workspace__copy">
+      {localizedCopy.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,127 @@
+---
+import { selectInitialGalleryItems } from "../../lib/media/presentation";
+import type { ManagedImagePresentation } from "../../types/media";
+import type { HomeLocale } from "../../types/home";
+import { getMediaCopy } from "../../lib/media/copy";
+import ManagedImage from "./ManagedImage.astro";
+import MediaState from "./MediaState.astro";
+
+interface Props {
+  id: string;
+  title: string;
+  items: readonly ManagedImagePresentation[];
+  initialCount?: number;
+  emptyMessage?: string;
+  showMoreLabel?: string;
+  locale?: HomeLocale;
+  headingLevel?: 2 | 3 | 4;
+  variant?: "gallery" | "collage";
+  showHeading?: boolean;
+  showCaption?: boolean;
+  showCredit?: boolean;
+}
+
+const {
+  id,
+  title,
+  items,
+  initialCount = 4,
+  emptyMessage,
+  showMoreLabel,
+  locale = "en",
+  headingLevel = 2,
+  variant = "gallery",
+  showHeading = true,
+  showCaption = variant !== "collage",
+  showCredit = variant !== "collage",
+} = Astro.props;
+const copy = getMediaCopy(locale);
+const resolvedEmptyMessage = emptyMessage ?? copy.galleryUnavailableMessage;
+const resolvedShowMoreLabel = showMoreLabel ?? copy.showRemainingEvidence;
+const { initial, remainder } = selectInitialGalleryItems(items, initialCount);
+const HeadingTag = headingLevel === 4 ? "h4" : headingLevel === 3 ? "h3" : "h2";
+const getOrientation = (image: ManagedImagePresentation) => {
+  if (
+    image.source.kind !== "managed" ||
+    image.source.width <= 0 ||
+    image.source.height <= 0
+  ) {
+    return "unknown";
+  }
+
+  const aspectRatio = image.source.width / image.source.height;
+  if (aspectRatio > 1.12) return "landscape";
+  if (aspectRatio < 0.88) return "portrait";
+  return "square";
+};
+---
+
+<section
+  class:list={["evidence-gallery", `evidence-gallery--${variant}`]}
+  aria-labelledby={`${id}-heading`}
+>
+  <HeadingTag
+    class:list={{ "visually-hidden": !showHeading }}
+    id={`${id}-heading`}>{title}</HeadingTag
+  >
+  {
+    items.length === 0 ? (
+      <MediaState
+        title={copy.galleryUnavailableTitle}
+        message={resolvedEmptyMessage}
+      />
+    ) : (
+      <>
+        <ol class="evidence-gallery__grid">
+          {initial.map((image) => (
+            <li
+              class={`evidence-gallery__item evidence-gallery__item--${getOrientation(image)}`}
+            >
+              <ManagedImage
+                image={image}
+                locale={locale}
+                displayMode={variant === "collage" ? "thumbnail" : "standard"}
+                showCaption={showCaption}
+                showCredit={showCredit}
+                sizes={
+                  variant === "collage"
+                    ? "(min-width: 64rem) 16rem, (min-width: 48rem) 33vw, 50vw"
+                    : undefined
+                }
+              />
+            </li>
+          ))}
+        </ol>
+        {remainder.length > 0 && (
+          <details class="evidence-gallery__more">
+            <summary>
+              {resolvedShowMoreLabel} ({remainder.length})
+            </summary>
+            <ol class="evidence-gallery__grid" start={initial.length + 1}>
+              {remainder.map((image) => (
+                <li
+                  class={`evidence-gallery__item evidence-gallery__item--${getOrientation(image)}`}
+                >
+                  <ManagedImage
+                    image={image}
+                    locale={locale}
+                    displayMode={
+                      variant === "collage" ? "thumbnail" : "standard"
+                    }
+                    showCaption={showCaption}
+                    showCredit={showCredit}
+                    sizes={
+                      variant === "collage"
+                        ? "(min-width: 64rem) 16rem, (min-width: 48rem) 33vw, 50vw"
+                        : undefined
+                    }
+                  />
+                </li>
+              ))}
+            </ol>
+          </details>
+        )}
+      </>
+    )
+  }
+</section>

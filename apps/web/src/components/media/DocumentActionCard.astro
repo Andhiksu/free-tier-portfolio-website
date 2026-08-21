@@ -1,0 +1,91 @@
+---
+import {
+  isPublicationReady,
+  isSafePublicPath,
+} from "../../lib/media/presentation";
+import type { DocumentPresentation } from "../../types/media";
+import type { HomeLocale } from "../../types/home";
+import { getMediaCopy } from "../../lib/media/copy";
+import ManagedImage from "./ManagedImage.astro";
+import MediaState from "./MediaState.astro";
+
+interface Props {
+  document: DocumentPresentation;
+  actionLabel?: string;
+  locale?: HomeLocale;
+  compact?: boolean;
+  minimal?: boolean;
+}
+
+const {
+  document,
+  actionLabel,
+  locale = "en",
+  compact = false,
+  minimal = false,
+} = Astro.props;
+const copy = getMediaCopy(locale);
+const resolvedActionLabel = actionLabel ?? copy.openPdf;
+const canOpen = isPublicationReady(document) && isSafePublicPath(document.href);
+const disclosures = [
+  document.fileType,
+  document.fileSizeLabel,
+  document.pageCount ? copy.pages(document.pageCount) : undefined,
+].filter(Boolean);
+---
+
+{
+  canOpen && minimal ? (
+    <a
+      class="document-card__minimal-action"
+      href={document.href}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {resolvedActionLabel}
+      <span class="visually-hidden">
+        : {document.title}; {disclosures.join(" · ")} ({copy.opensNewTab})
+      </span>
+    </a>
+  ) : canOpen ? (
+    <article
+      class:list={["document-card", { "document-card--compact": compact }]}
+    >
+      {!compact && document.preview && (
+        <ManagedImage image={document.preview} locale={locale} />
+      )}
+      <div class="document-card__content">
+        {compact ? (
+          <p class="document-card__title">{document.title}</p>
+        ) : (
+          <h3>{document.title}</h3>
+        )}
+        {!compact && <p>{document.description}</p>}
+        <p class="media-disclosure">{disclosures.join(" · ")}</p>
+        <a
+          class="media-action"
+          href={document.href}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {resolvedActionLabel}
+          <span class="visually-hidden">
+            : {document.title} ({copy.opensNewTab})
+          </span>
+        </a>
+      </div>
+    </article>
+  ) : (
+    <article class="document-card document-card--unavailable">
+      <div class="document-card__content">
+        <MediaState
+          title={copy.documentUnavailableTitle}
+          message={copy.documentUnavailableMessage}
+          variant={
+            document.availability === "missing" ? "missing" : "unavailable"
+          }
+        />
+      </div>
+    </article>
+  )
+}

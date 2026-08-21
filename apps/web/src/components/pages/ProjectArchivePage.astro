@@ -1,0 +1,155 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  isProjectBilingualComplete,
+  projectPageCopy,
+} from "../../data/projects";
+import type { HomeLocale, HomePageData } from "../../types/home";
+import type { ProjectCatalogEntry } from "../../types/projects";
+import ProjectCard from "../projects/ProjectCard.astro";
+import ProjectSystemState from "../projects/ProjectSystemState.astro";
+import SiteHeader from "../navigation/SiteHeader.astro";
+import ProjectRail from "../sections/ProjectRail.astro";
+import {
+  getMediaArchivePath,
+  getProjectDetailPath,
+  getProjectsArchivePath,
+} from "../../lib/routes";
+
+interface Props {
+  locale: HomeLocale;
+  homeData: HomePageData;
+  projects: readonly ProjectCatalogEntry[];
+}
+
+const { locale, homeData, projects } = Astro.props;
+const copy = projectPageCopy[locale];
+const incompleteCount = projects.filter(
+  (project) => !isProjectBilingualComplete(project),
+).length;
+const pathname = getProjectsArchivePath(locale);
+const hasPublishedCaseStudies = projects.some(
+  (project) => project.status === "case-study",
+);
+const publishedLabel = locale === "id" ? "Studi kasus" : "Case study";
+const mediaLibraryLabel =
+  locale === "id"
+    ? "Buka pustaka media & bukti"
+    : "Open media & evidence library";
+const previews = projects.map((project) => ({
+  title: project.content[locale].title,
+  summary: project.content[locale].summary,
+  evidenceValue:
+    project.status === "case-study" ? publishedLabel : copy.evidencePending,
+  href: getProjectDetailPath(locale, project.slug),
+  linkLabel: `${copy.archive.openLabel}: ${project.content[locale].title}`,
+  cover: project.gallery?.[locale]?.[0],
+}));
+---
+
+<BaseLayout
+  fixedWorkspace
+  metadata={{
+    locale,
+    title: `${copy.archive.title} — Portfolio Owner`,
+    description: copy.archive.description,
+    pathname,
+    indexable: true,
+  }}
+>
+  <div class="site-shell site-shell--home">
+    <SiteHeader
+      data={homeData}
+      navigationMode="route"
+      currentDestination="projects"
+      currentPathname={pathname}
+    />
+
+    <main
+      id="main-content"
+      class="home-main home-workspace"
+      data-workspace-ready="true"
+      data-active-view="projects"
+    >
+      <div class="home-opening">
+        <div class="home-opening__canvas home-workspace__stage">
+          <section
+            class="workspace-panel workspace-panel--standalone"
+            data-workspace-panel="standalone"
+            data-workspace-active="true"
+          >
+            <header class="project-page-hero">
+              <p class="project-page-hero__eyebrow">{copy.archive.eyebrow}</p>
+              <h1>{copy.archive.title}</h1>
+              <p>
+                {
+                  hasPublishedCaseStudies
+                    ? locale === "id"
+                      ? "Tiga studi kasus bilingual tentang analitik, NLP, dan computer vision."
+                      : "Three bilingual case studies across analytics, NLP, and computer vision."
+                    : copy.archive.description
+                }
+              </p>
+              <a class="section-link" href={getMediaArchivePath(locale)}>
+                {mediaLibraryLabel}
+              </a>
+            </header>
+
+            <section
+              class="project-archive__collection"
+              aria-labelledby="project-list-heading"
+            >
+              <div class="project-archive__heading">
+                <h2 id="project-list-heading">{copy.archive.listHeading}</h2>
+                <p>
+                  {
+                    hasPublishedCaseStudies
+                      ? publishedLabel
+                      : copy.evidencePending
+                  }
+                </p>
+              </div>
+
+              {
+                previews.length > 0 ? (
+                  <ul class="project-archive__list" role="list">
+                    {previews.map((item, index) => (
+                      <li class="projects-section__item">
+                        <ProjectCard
+                          item={item}
+                          index={index}
+                          evidenceLabel={copy.archive.evidenceLabel}
+                          variant="archive"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <ProjectSystemState
+                    title={copy.archive.emptyTitle}
+                    copy={copy.archive.emptyCopy}
+                    variant="empty"
+                    headingLevel="h3"
+                  />
+                )
+              }
+
+              {
+                incompleteCount > 0 && (
+                  <ProjectSystemState
+                    title={copy.archive.incompleteTitle}
+                    copy={copy.archive.incompleteCopy}
+                    variant="incomplete"
+                    headingLevel="h3"
+                  />
+                )
+              }
+            </section>
+          </section>
+        </div>
+
+        <ProjectRail data={homeData.projects} locale={locale} />
+      </div>
+    </main>
+  </div>
+</BaseLayout>

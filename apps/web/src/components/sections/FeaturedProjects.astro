@@ -1,0 +1,50 @@
+---
+import type { HomePageData } from "../../types/home";
+import ProjectCard from "../projects/ProjectCard.astro";
+
+interface Props {
+  data: HomePageData["projects"];
+  variant?: "preview" | "workspace";
+}
+
+const { data, variant = "workspace" } = Astro.props;
+const headingId = `${data.id}-heading`;
+---
+
+<section
+  class:list={[
+    "projects-section",
+    `projects-section--${variant}`,
+    "home-section",
+  ]}
+  id={data.id}
+  aria-labelledby={headingId}
+>
+  <div class="projects-section__header">
+    <div>
+      <h2 class="projects-section__heading" id={headingId}>{data.heading}</h2>
+    </div>
+    <p class="projects-section__description">{data.description}</p>
+  </div>
+
+  <ul class="projects-section__list" role="list">
+    {
+      data.items.map((item, index) => {
+        const prominence = index === 0 ? "featured" : "supporting";
+
+        return (
+          <li
+            class={`projects-section__item projects-section__item--${prominence}`}
+          >
+            <ProjectCard
+              item={item}
+              index={index}
+              evidenceLabel={data.evidenceLabel}
+              variant={variant}
+            />
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>

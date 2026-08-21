@@ -1,0 +1,32 @@
+---
+import { isSafePublicPath } from "../../lib/media/presentation";
+import type { RelatedContentPresentation } from "../../types/media";
+import type { HomeLocale } from "../../types/home";
+import { getMediaCopy } from "../../lib/media/copy";
+
+interface Props {
+  item: RelatedContentPresentation;
+  locale?: HomeLocale;
+}
+
+const { item, locale = "en" } = Astro.props;
+const copy = getMediaCopy(locale);
+const canOpen =
+  item.availability === "available" &&
+  item.publicationApproved &&
+  isSafePublicPath(item.href);
+---
+
+{
+  canOpen && (
+    <a class="related-content-link" href={item.href}>
+      <span class="related-content-link__kind">
+        {item.relationship === "project"
+          ? copy.relatedProject
+          : copy.relatedEvidence}
+      </span>
+      <strong>{item.title}</strong>
+      {item.description && <span>{item.description}</span>}
+    </a>
+  )
+}

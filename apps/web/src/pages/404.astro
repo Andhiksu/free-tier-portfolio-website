@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getRecoveryLinks } from "../lib/routes";
+
+const recoveryLinks = getRecoveryLinks("en");
+---
+
+<BaseLayout
+  metadata={{
+    locale: "en",
+    title: "Page not found — Portfolio Owner",
+    description:
+      "The requested page is unavailable. Return to the English homepage or explore the public project directions.",
+    indexable: false,
+  }}
+>
+  <div class="error-shell" data-error-page>
+    <main id="main-content" class="error-main">
+      <div class="error-main__content">
+        <p class="error-main__eyebrow" data-error-eyebrow>Error 404</p>
+        <h1 data-error-heading>Page not found</h1>
+        <p class="error-main__copy" data-error-copy>
+          The page you requested is unavailable. You can return to the homepage
+          or continue with the public project directions.
+        </p>
+
+        <nav
+          class="error-main__actions"
+          aria-label="Recovery links"
+          data-error-nav
+        >
+          <a href={recoveryLinks.home} data-error-home>Return to Home</a>
+          <a href={recoveryLinks.projects} data-error-projects>
+            Explore Projects
+          </a>
+        </nav>
+      </div>
+
+      <div class="error-main__geometry" aria-hidden="true">
+        <span class="error-main__orbit"></span>
+        <span class="error-main__plane error-main__plane--back"></span>
+        <span class="error-main__plane error-main__plane--front"></span>
+        <span class="error-main__code">404</span>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (() => {
+    const firstPathSegment = window.location.pathname.split("/")[1] ?? "";
+
+    if (firstPathSegment !== "id") {
+      return;
+    }
+
+    const page = document.querySelector("[data-error-page]");
+
+    if (!(page instanceof HTMLElement)) {
+      return;
+    }
+
+    const heading = page.querySelector("[data-error-heading]");
+    const copy = page.querySelector("[data-error-copy]");
+    const navigation = page.querySelector("[data-error-nav]");
+    const homeLink = page.querySelector("[data-error-home]");
+    const projectsLink = page.querySelector("[data-error-projects]");
+
+    document.documentElement.lang = "id";
+    document.title = "Halaman tidak ditemukan — Portfolio Owner";
+
+    if (heading instanceof HTMLElement) {
+      heading.textContent = "Halaman tidak ditemukan";
+    }
+
+    if (copy instanceof HTMLElement) {
+      copy.textContent =
+        "Halaman yang Anda minta tidak tersedia. Anda dapat kembali ke beranda atau melanjutkan ke arah proyek publik.";
+    }
+
+    if (navigation instanceof HTMLElement) {
+      navigation.setAttribute("aria-label", "Tautan pemulihan");
+    }
+
+    if (homeLink instanceof HTMLAnchorElement) {
+      homeLink.href = "/id/";
+      homeLink.textContent = "Kembali ke Beranda";
+    }
+
+    if (projectsLink instanceof HTMLAnchorElement) {
+      projectsLink.href = "/id/projects/";
+      projectsLink.textContent = "Jelajahi Proyek";
+    }
+  })();
+</script>

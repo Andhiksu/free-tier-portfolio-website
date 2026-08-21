@@ -1,0 +1,21 @@
+---
+import type { HomePageData } from "../../types/home";
+
+interface Props {
+  data: HomePageData;
+}
+
+const { data } = Astro.props;
+const about = data.about;
+const headingId = `${about.id}-heading`;
+---
+
+<section
+  class="about-section home-section"
+  id={about.id}
+  aria-labelledby={headingId}
+>
+  <p class="home-section__eyebrow">{data.siteLabel}</p>
+  <h2 class="about-section__heading" id={headingId}>{about.heading}</h2>
+  <p class="about-section__copy">{about.copy}</p>
+</section>

@@ -1,0 +1,6 @@
+**/.astro/
+**/dist/
+**/node_modules/
+.pnpm-store/
+assets-source/private-originals/
+pnpm-lock.yaml

@@ -1,0 +1,164 @@
+---
+import type { HomePageData } from "../../types/home";
+import type { ValidatedExperience } from "../../lib/sanity/types";
+import { getExperienceArchivePath } from "../../lib/routes";
+import ManagedImage from "../media/ManagedImage.astro";
+
+interface Props {
+  data: HomePageData["journey"];
+  records?: readonly ValidatedExperience[];
+  locale: HomePageData["lang"];
+}
+
+const { data, records = [], locale } = Astro.props;
+const headingId = "experience-heading";
+const dateFormatter = new Intl.DateTimeFormat(
+  locale === "id" ? "id-ID" : "en-US",
+  { month: "short", year: "numeric", timeZone: "UTC" },
+);
+const formatDate = (value: string | undefined) =>
+  value ? dateFormatter.format(new Date(`${value}T00:00:00Z`)) : undefined;
+const publicRecords = records
+  .filter((record) => record.visibility === "public")
+  .toSorted((left, right) => {
+    const leftEnd = left.endDate ?? "9999-12-31";
+    const rightEnd = right.endDate ?? "9999-12-31";
+    return (
+      rightEnd.localeCompare(leftEnd) ||
+      (right.startDate ?? "").localeCompare(left.startDate ?? "") ||
+      left.order - right.order
+    );
+  });
+const displayRecords =
+  publicRecords.length > 0
+    ? publicRecords.map((record) => ({
+        id: record.id,
+        role: record.role[locale],
+        organization: record.organization,
+        employmentType: record.employmentType,
+        location: record.location?.[locale],
+        summary: record.summary[locale],
+        dateLabel: [formatDate(record.startDate), formatDate(record.endDate)]
+          .filter(Boolean)
+          .join(" — "),
+        gallery: record.gallery[locale].slice(0, 3),
+      }))
+    : data.chapters.map((chapter, index) => ({
+        id: chapter.id ?? `experience-${index + 1}`,
+        role: chapter.label,
+        organization: chapter.organization,
+        employmentType: chapter.employmentType,
+        location: chapter.location,
+        summary: chapter.summary,
+        dateLabel: chapter.dateLabel,
+        gallery: [],
+      }));
+const copy =
+  locale === "id"
+    ? {
+        eyebrow: "Perjalanan profesional",
+        title: "Pengalaman",
+        action: "Jelajahi catatan",
+      }
+    : {
+        eyebrow: "Professional journey",
+        title: "Experience",
+        action: "Explore record",
+      };
+---
+
+<section
+  class="experience-highlights home-section"
+  id="experience"
+  aria-labelledby={headingId}
+>
+  <header class="experience-highlights__header">
+    <div>
+      <p class="experience-highlights__eyebrow">{copy.eyebrow}</p>
+      <h2 id={headingId}>{copy.title}</h2>
+    </div>
+  </header>
+
+  <ol class="experience-highlights__list" role="list">
+    {
+      displayRecords.map((record, index) => (
+        <li class="experience-highlights__item">
+          <span class="experience-highlight__marker" aria-hidden="true">
+            <span>{String(index + 1).padStart(2, "0")}</span>
+          </span>
+          <a
+            class="experience-highlight"
+            href={`${getExperienceArchivePath(locale)}#${record.id}`}
+            aria-label={`${locale === "id" ? "Buka detail" : "Open details"}: ${record.role}`}
+          >
+            <div class="experience-highlight__content">
+              <div class="experience-highlight__heading">
+                <div>
+                  {record.organization && (
+                    <p class="experience-highlight__organization">
+                      {record.organization}
+                    </p>
+                  )}
+                  <h3>{record.role}</h3>
+                </div>
+                {record.dateLabel && (
+                  <p class="experience-highlight__date">{record.dateLabel}</p>
+                )}
+              </div>
+              {(record.employmentType || record.location) && (
+                <p class="experience-highlight__meta">
+                  {[record.employmentType, record.location]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
+              )}
+              <p class="experience-highlight__summary">{record.summary}</p>
+              <span class="experience-highlight__action">
+                {copy.action}
+                <span aria-hidden="true">↗</span>
+              </span>
+            </div>
+
+            {record.gallery.length > 0 && (
+              <ul
+                class:list={[
+                  "experience-highlight__gallery",
+                  {
+                    "experience-highlight__gallery--single":
+                      record.gallery.length === 1,
+                  },
+                ]}
+                role="list"
+              >
+                {record.gallery.map((image, imageIndex) => (
+                  <li
+                    class:list={[
+                      "experience-highlight__frame",
+                      {
+                        "experience-highlight__frame--primary":
+                          imageIndex === 0,
+                      },
+                    ]}
+                  >
+                    <ManagedImage
+                      image={image}
+                      locale={locale}
+                      displayMode="thumbnail"
+                      showCaption={false}
+                      showCredit={false}
+                      sizes={
+                        imageIndex === 0
+                          ? "(min-width: 48rem) 14rem, 42vw"
+                          : "7rem"
+                      }
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</section>

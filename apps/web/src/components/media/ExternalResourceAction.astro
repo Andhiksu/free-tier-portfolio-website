@@ -1,0 +1,70 @@
+---
+import { isPresentableExternalResource } from "../../lib/media/presentation";
+import { getMediaCopy } from "../../lib/media/copy";
+import type { ExternalResourcePresentation } from "../../types/media";
+import type { HomeLocale } from "../../types/home";
+import ManagedImage from "./ManagedImage.astro";
+import MediaState from "./MediaState.astro";
+
+interface Props {
+  resource: ExternalResourcePresentation;
+  actionLabel?: string;
+  locale?: HomeLocale;
+  headingLevel?: 3 | 4;
+}
+
+const { resource, actionLabel, locale = "en", headingLevel = 3 } = Astro.props;
+const copy = getMediaCopy(locale);
+const resolvedActionLabel = actionLabel ?? copy.openResource;
+const canOpen = isPresentableExternalResource(resource);
+const kindLabel = copy.externalKind[resource.kind];
+const HeadingTag = headingLevel === 4 ? "h4" : "h3";
+---
+
+{
+  canOpen ? (
+    <article class="external-resource">
+      {resource.poster && (
+        <ManagedImage image={resource.poster} locale={locale} />
+      )}
+      {resource.kind === "video" &&
+        resource.generatedPoster &&
+        !resource.poster && (
+          <div class="external-resource__generated-poster" aria-hidden="true">
+            <span>▶</span>
+            <span>{kindLabel}</span>
+          </div>
+        )}
+      <div class="external-resource__content">
+        <p class="media-disclosure">
+          {kindLabel} · {copy.externalDestination}
+        </p>
+        <HeadingTag>{resource.title}</HeadingTag>
+        {resource.description && <p>{resource.description}</p>}
+        <a
+          class="media-action"
+          href={resource.href}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {resolvedActionLabel}
+          <span class="visually-hidden">
+            : {resource.title} ({copy.opensNewTab})
+          </span>
+        </a>
+      </div>
+    </article>
+  ) : (
+    <article class="external-resource external-resource--unavailable">
+      <div class="external-resource__content">
+        <MediaState
+          title={copy.externalUnavailableTitle}
+          message={copy.externalUnavailableMessage}
+          variant={
+            resource.availability === "missing" ? "missing" : "unavailable"
+          }
+        />
+      </div>
+    </article>
+  )
+}

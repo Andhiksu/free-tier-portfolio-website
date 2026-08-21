@@ -1,0 +1,344 @@
+---
+import type { HomeLanguageLink, HomePageData } from "../../types/home";
+import {
+  getCanonicalPublicPathname,
+  getHomepageWorkspaceHref,
+  getExperienceArchivePath,
+  getLocaleSwitchDestination,
+  getLocalizedHomepagePath,
+  getProjectsArchivePath,
+  SUPPORTED_LOCALES,
+  type PublicPathname,
+  type WorkspaceDestination,
+} from "../../lib/routes";
+import Icon, { type IconName } from "../ui/Icon.astro";
+
+interface Props {
+  data: HomePageData;
+  navigationMode?: "workspace" | "route";
+  currentDestination?: WorkspaceDestination;
+  currentPathname?: PublicPathname;
+}
+
+const {
+  data,
+  navigationMode = "route",
+  currentDestination,
+  currentPathname = getLocalizedHomepagePath(data.lang),
+} = Astro.props;
+
+const languageLinks: HomeLanguageLink[] = SUPPORTED_LOCALES.flatMap(
+  (locale) => {
+    const destination = getLocaleSwitchDestination(currentPathname, locale);
+
+    return destination
+      ? [
+          {
+            locale,
+            href: getCanonicalPublicPathname(destination),
+            label: locale.toUpperCase(),
+          },
+        ]
+      : [];
+  },
+);
+
+const iconByDestination: Readonly<Record<WorkspaceDestination, IconName>> = {
+  home: "home",
+  about: "profile",
+  experience: "journey",
+  projects: "projects",
+  education: "education",
+  certifications: "credentials",
+  honors: "honors",
+  publications: "publications",
+  credentials: "credentials",
+  contact: "contact",
+};
+
+const ownerWorkspaceDestinations: readonly {
+  id: WorkspaceDestination;
+  label: string;
+  enabled: boolean;
+  order: number;
+}[] = [
+  {
+    id: "home",
+    label: data.lang === "id" ? "Beranda" : "Home",
+    enabled: true,
+    order: 0,
+  },
+  {
+    id: "about",
+    label: data.lang === "id" ? "Tentang" : "About",
+    enabled: true,
+    order: 1,
+  },
+  {
+    id: "experience",
+    label: data.lang === "id" ? "Pengalaman" : "Experience",
+    enabled: true,
+    order: 2,
+  },
+  {
+    id: "projects",
+    label: data.lang === "id" ? "Proyek" : "Projects",
+    enabled: true,
+    order: 3,
+  },
+  {
+    id: "credentials",
+    label: data.lang === "id" ? "Kredensial" : "Credentials",
+    enabled: true,
+    order: 4,
+  },
+];
+
+const workspaceDestinations = ownerWorkspaceDestinations.map((destination) => ({
+  ...destination,
+  icon: iconByDestination[destination.id],
+}));
+
+const getDestinationHref = (destination: WorkspaceDestination) => {
+  if (navigationMode === "workspace") {
+    return getHomepageWorkspaceHref(data.lang, destination);
+  }
+
+  if (destination === "home") {
+    return getLocalizedHomepagePath(data.lang);
+  }
+
+  if (destination === "experience") {
+    return getExperienceArchivePath(data.lang);
+  }
+
+  if (destination === "projects") {
+    return getProjectsArchivePath(data.lang);
+  }
+
+  if (destination === "credentials") {
+    return getHomepageWorkspaceHref(data.lang, "credentials");
+  }
+
+  return getHomepageWorkspaceHref(data.lang, destination);
+};
+---
+
+<header
+  class="site-header"
+  data-site-header
+  data-menu-open="false"
+  data-navigation-mode={navigationMode}
+>
+  <div class="site-header__bar">
+    <button
+      class="theme-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label={data.themeControl.label}
+      title={data.themeControl.label}
+      data-theme-toggle
+    >
+      <span class="theme-toggle__icons" aria-hidden="true">
+        <svg
+          class="theme-toggle__icon theme-toggle__icon--light"
+          viewBox="0 0 24 24"
+        >
+          <circle cx="12" cy="12" r="3.5"></circle>
+          <path
+            d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+          ></path>
+        </svg>
+        <svg
+          class="theme-toggle__icon theme-toggle__icon--dark"
+          viewBox="0 0 24 24"
+        >
+          <path d="M19.5 15.2A8 8 0 0 1 8.8 4.5 8 8 0 1 0 19.5 15.2Z"></path>
+        </svg>
+      </span>
+      <span class="visually-hidden">{data.themeControl.label}</span>
+    </button>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-navigation-panel"
+      data-menu-toggle
+      data-open-label={data.mobileMenu.openLabel}
+      data-close-label={data.mobileMenu.closeLabel}
+    >
+      <svg
+        class="menu-toggle__icon menu-toggle__icon--open"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path d="M5 7h14M5 12h14M5 17h14"></path>
+      </svg>
+      <svg
+        class="menu-toggle__icon menu-toggle__icon--close"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path d="m6 6 12 12M18 6 6 18"></path>
+      </svg>
+      <span class="visually-hidden" data-menu-label
+        >{data.mobileMenu.openLabel}</span
+      >
+    </button>
+  </div>
+
+  <div
+    class="site-header__navigation-panel"
+    id="site-navigation-panel"
+    data-navigation-panel
+  >
+    <nav class="workspace-nav" aria-label={data.primaryNavigation.label}>
+      {
+        workspaceDestinations.map((destination) => (
+          <a
+            class="workspace-nav__link"
+            href={getDestinationHref(destination.id)}
+            aria-label={destination.label}
+            aria-current={
+              destination.id === currentDestination ? "location" : undefined
+            }
+            data-workspace-link={
+              navigationMode === "workspace" ? "" : undefined
+            }
+            data-destination={destination.id}
+          >
+            <Icon name={destination.icon} class="workspace-nav__icon" />
+            <span class="workspace-nav__label">{destination.label}</span>
+            <span class="workspace-nav__tooltip" aria-hidden="true">
+              {destination.label}
+            </span>
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="site-header__utilities" data-utility-header>
+      <nav class="language-nav" aria-label={data.languageNavigation.label}>
+        {
+          languageLinks.map((link) => (
+            <a
+              href={link.href}
+              lang={link.locale}
+              hreflang={link.locale}
+              aria-current={link.locale === data.lang ? "page" : undefined}
+              data-locale-link
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  const storageKey = "free-tier-portfolio-website-theme";
+  const header = document.querySelector("[data-site-header]");
+
+  if (header instanceof HTMLElement) {
+    const menuButton = header.querySelector("[data-menu-toggle]");
+    const menuLabel = header.querySelector("[data-menu-label]");
+    const navigationPanel = header.querySelector("[data-navigation-panel]");
+    const themeButton = header.querySelector("[data-theme-toggle]");
+    if (
+      menuButton instanceof HTMLButtonElement &&
+      menuLabel instanceof HTMLElement &&
+      navigationPanel instanceof HTMLElement &&
+      themeButton instanceof HTMLButtonElement
+    ) {
+      const openLabel = menuButton.dataset.openLabel ?? "";
+      const closeLabel = menuButton.dataset.closeLabel ?? "";
+      const mobileMedia = window.matchMedia("(max-width: 48rem)");
+
+      const applyTheme = (theme: "light" | "dark") => {
+        document.documentElement.dataset.theme = theme;
+        themeButton.setAttribute("aria-pressed", String(theme === "dark"));
+      };
+
+      const setMenuOpen = (isOpen: boolean) => {
+        header.dataset.menuOpen = String(isOpen);
+        menuButton.setAttribute("aria-expanded", String(isOpen));
+        menuLabel.textContent = isOpen ? closeLabel : openLabel;
+      };
+
+      const currentTheme =
+        document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+
+      applyTheme(currentTheme);
+      setMenuOpen(false);
+
+      menuButton.addEventListener("click", () => {
+        setMenuOpen(menuButton.getAttribute("aria-expanded") !== "true");
+      });
+
+      navigationPanel.addEventListener("click", (event) => {
+        if (event.target instanceof Element && event.target.closest("a")) {
+          setMenuOpen(false);
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          menuButton.getAttribute("aria-expanded") === "true"
+        ) {
+          setMenuOpen(false);
+          menuButton.focus();
+        }
+      });
+
+      mobileMedia.addEventListener("change", (event) => {
+        const focusWillBeHidden =
+          event.matches && navigationPanel.contains(document.activeElement);
+
+        setMenuOpen(false);
+
+        if (focusWillBeHidden) {
+          menuButton.focus();
+        }
+      });
+
+      themeButton.addEventListener("click", () => {
+        const nextTheme =
+          document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+
+        applyTheme(nextTheme);
+
+        try {
+          window.localStorage.setItem(storageKey, nextTheme);
+        } catch {
+          // Keep the selected theme active for this page when storage is unavailable.
+        }
+      });
+
+      window.addEventListener("storage", (event) => {
+        try {
+          if (
+            event.storageArea !== window.localStorage ||
+            (event.key !== storageKey && event.key !== null)
+          ) {
+            return;
+          }
+
+          const synchronizedTheme =
+            event.newValue === "dark" || event.newValue === "light"
+              ? event.newValue
+              : "light";
+
+          applyTheme(synchronizedTheme);
+        } catch {
+          applyTheme("light");
+        }
+      });
+
+      header.dataset.navigationReady = "true";
+    }
+  }
+</script>

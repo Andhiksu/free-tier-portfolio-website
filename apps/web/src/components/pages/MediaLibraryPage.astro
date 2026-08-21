@@ -1,0 +1,165 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { HomeLocale, HomePageData } from "../../types/home";
+import type { ValidatedMediaItem } from "../../lib/sanity/types";
+import { getMediaArchivePath } from "../../lib/routes";
+import SiteHeader from "../navigation/SiteHeader.astro";
+import SiteFooter from "../layout/SiteFooter.astro";
+import EvidenceGallery from "../media/EvidenceGallery.astro";
+import DocumentActionCard from "../media/DocumentActionCard.astro";
+
+interface Props {
+  locale: HomeLocale;
+  homeData: HomePageData;
+  items: readonly ValidatedMediaItem[];
+}
+
+const { locale, homeData, items } = Astro.props;
+const pathname = getMediaArchivePath(locale);
+const copy =
+  locale === "id"
+    ? {
+        eyebrow: "Media & bukti",
+        title: "Pustaka media & bukti",
+        description:
+          "Koleksi bilingual yang menghubungkan media publik terpilih dengan profil, pengalaman, proyek, dan kredensial.",
+        itemCount: "materi sumber terwakili",
+        files: "Format",
+        empty: "Belum ada koleksi media publik yang tersedia.",
+        categories: {
+          profile: "Profil",
+          experience: "Pengalaman",
+          project: "Proyek",
+          credential: "Kredensial",
+          document: "Dokumen",
+          archive: "Provenance arsip",
+        },
+      }
+    : {
+        eyebrow: "Media & evidence",
+        title: "Media & evidence library",
+        description:
+          "A bilingual collection connecting selected public media with profile, experience, project, and credential records.",
+        itemCount: "source items represented",
+        files: "Formats",
+        empty: "No public media collection is currently available.",
+        categories: {
+          profile: "Profile",
+          experience: "Experience",
+          project: "Projects",
+          credential: "Credentials",
+          document: "Documents",
+          archive: "Archive provenance",
+        },
+      };
+const categoryOrder = [
+  "profile",
+  "experience",
+  "project",
+  "credential",
+  "document",
+  "archive",
+] as const;
+const groups = categoryOrder
+  .map((category) => ({
+    category,
+    items: items.filter((item) => item.category === category),
+  }))
+  .filter((group) => group.items.length > 0);
+---
+
+<BaseLayout
+  metadata={{
+    locale,
+    title: `${copy.title} — Portfolio Owner`,
+    description: copy.description,
+    pathname,
+    indexable: true,
+  }}
+>
+  <div class="site-shell site-shell--content-system">
+    <SiteHeader
+      data={homeData}
+      navigationMode="route"
+      currentPathname={pathname}
+    />
+    <main id="main-content" class="content-page-main media-library">
+      <header class="content-page-hero media-library__hero">
+        <p>{copy.eyebrow}</p>
+        <h1>{copy.title}</h1>
+        <p>{copy.description}</p>
+      </header>
+
+      {
+        groups.length === 0 ? (
+          <p class="media-library__empty">{copy.empty}</p>
+        ) : (
+          <div class="media-library__groups">
+            {groups.map((group) => (
+              <section
+                class="media-library__group"
+                aria-labelledby={`media-${group.category}`}
+              >
+                <header>
+                  <p>{String(group.items.length).padStart(2, "0")}</p>
+                  <h2 id={`media-${group.category}`}>
+                    {copy.categories[group.category]}
+                  </h2>
+                </header>
+                <div class="media-library__items">
+                  {group.items.map((item) => (
+                    <details class="media-library__item">
+                      <summary>
+                        <span>
+                          <strong>{item.title[locale]}</strong>
+                          <small>{item.description[locale]}</small>
+                        </span>
+                        <span aria-hidden="true">+</span>
+                      </summary>
+                      <div class="media-library__item-body">
+                        <p>{item.description[locale]}</p>
+                        <dl>
+                          <div>
+                            <dt>{copy.itemCount}</dt>
+                            <dd>{item.sourceInventoryIds.length}</dd>
+                          </div>
+                          <div>
+                            <dt>{copy.files}</dt>
+                            <dd>{item.fileTypes.join(", ")}</dd>
+                          </div>
+                        </dl>
+                        {item.gallery[locale].length > 0 && (
+                          <EvidenceGallery
+                            id={`${item.stableId.toLowerCase()}-${locale}`}
+                            title={item.title[locale]}
+                            items={item.gallery[locale]}
+                            initialCount={3}
+                            locale={locale}
+                            headingLevel={3}
+                            variant="collage"
+                            showHeading={false}
+                          />
+                        )}
+                        {item.documents[locale].length > 0 && (
+                          <div class="media-library__documents">
+                            {item.documents[locale].map((document) => (
+                              <DocumentActionCard
+                                document={document}
+                                locale={locale}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        )
+      }
+    </main>
+    <SiteFooter data={homeData.footer} />
+  </div>
+</BaseLayout>

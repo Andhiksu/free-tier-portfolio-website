@@ -1,0 +1,12 @@
+---
+import ExperiencePage from "../../../components/pages/ExperiencePage.astro";
+import { getSiteContent } from "../../../lib/sanity/loader";
+
+const content = await getSiteContent();
+---
+
+<ExperiencePage
+  locale="en"
+  homeData={content.homeData.en}
+  experiences={content.experience.items}
+/>

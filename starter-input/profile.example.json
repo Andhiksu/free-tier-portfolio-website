@@ -1,0 +1,14 @@
+{
+  "displayName": "Portfolio Owner",
+  "headline": "Designer and developer building useful digital products",
+  "publicEmail": "hello@example.com",
+  "defaultLocale": "en",
+  "locales": ["en", "id"],
+  "location": "Your city, country",
+  "socialLinks": {
+    "github": "https://github.com/example-user",
+    "linkedin": "https://www.linkedin.com/in/example-profile"
+  },
+  "cms": "none",
+  "domain": ""
+}

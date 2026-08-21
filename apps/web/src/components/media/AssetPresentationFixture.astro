@@ -1,0 +1,131 @@
+---
+import type {
+  CredentialPresentation,
+  ExternalResourcePresentation,
+  ManagedImagePresentation,
+} from "../../types/media";
+import type { HomeLocale } from "../../types/home";
+import CredentialPreviewCard from "./CredentialPreviewCard.astro";
+import EvidenceGallery from "./EvidenceGallery.astro";
+import ExternalResourceAction from "./ExternalResourceAction.astro";
+import PortraitMedia from "./PortraitMedia.astro";
+
+interface Props {
+  portraitSrc?: string;
+  locale?: HomeLocale;
+}
+
+const { portraitSrc, locale = "en" } = Astro.props;
+const portrait: ManagedImagePresentation = {
+  id: "qa-portrait",
+  availability: portraitSrc ? "available" : "unavailable",
+  publicationApproved: Boolean(portraitSrc),
+  source: portraitSrc
+    ? {
+        kind: "managed",
+        src: portraitSrc,
+        width: 800,
+        height: 1000,
+        mimeType: "image/png",
+      }
+    : { kind: "placeholder" },
+  alt: "Neutral placeholder portrait for layout review",
+  responsiveVariants: [
+    ...(portraitSrc
+      ? [
+          { src: portraitSrc, width: 400, height: 500 },
+          { src: portraitSrc, width: 800, height: 1000 },
+        ]
+      : []),
+  ],
+  sizes: "(min-width: 48rem) 22rem, 80vw",
+  caption: "Local layout fixture — not publication content.",
+  focalPoint: { x: 50, y: 40 },
+};
+
+const unavailableImage: ManagedImagePresentation = {
+  id: "qa-unavailable-image",
+  availability: "unavailable",
+  publicationApproved: false,
+  source: { kind: "placeholder" },
+  alt: "",
+};
+
+const repository: ExternalResourcePresentation = {
+  id: "qa-repository",
+  availability: "available",
+  publicationApproved: true,
+  kind: "repository",
+  title: "Reviewed source repository",
+  description:
+    "A safe external-link fixture for keyboard and disclosure review.",
+  href: "https://github.com/example-user",
+};
+
+const video: ExternalResourcePresentation = {
+  id: "qa-video",
+  availability: "unavailable",
+  publicationApproved: false,
+  kind: "video",
+  title: "Poster-first video evidence",
+  description: "No player, autoplay, or third-party embed is loaded.",
+  poster: unavailableImage,
+};
+
+const credential: CredentialPresentation = {
+  id: "qa-credential",
+  availability: "unavailable",
+  publicationApproved: false,
+  title: "Credential awaiting evidence review",
+  issuer: "Issuer withheld for local layout review",
+  gallery: [],
+  related: [
+    {
+      id: "qa-related-project",
+      availability: "available",
+      publicationApproved: true,
+      title: "Related project",
+      description: "Internal relationship fixture.",
+      href: "/en/projects/analytics-decision-support/",
+      relationship: "project",
+    },
+  ],
+};
+---
+
+<div class="asset-presentation-fixture">
+  <header>
+    <p class="media-disclosure">Local-only presentation fixture</p>
+    <h1>Asset presentation foundation</h1>
+    <p>
+      This non-route fixture uses safe placeholders and contains no private
+      asset or publication content.
+    </p>
+  </header>
+  <section
+    class="asset-presentation-fixture__examples"
+    aria-labelledby="qa-examples-heading"
+  >
+    <h2 id="qa-examples-heading" class="visually-hidden">
+      Media presentation examples
+    </h2>
+    <div class="asset-presentation-fixture__grid">
+      <PortraitMedia image={portrait} locale={locale} />
+      <ExternalResourceAction resource={repository} locale={locale} />
+      <ExternalResourceAction resource={video} locale={locale} />
+      <CredentialPreviewCard credential={credential} locale={locale} />
+    </div>
+  </section>
+  <EvidenceGallery
+    id="qa-gallery"
+    title="Evidence gallery"
+    items={[
+      portrait,
+      unavailableImage,
+      unavailableImage,
+      unavailableImage,
+      unavailableImage,
+    ]}
+    locale={locale}
+  />
+</div>
