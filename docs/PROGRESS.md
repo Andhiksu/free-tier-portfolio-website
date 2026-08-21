@@ -8,7 +8,7 @@
 
 **Repository quality gates:** GREEN for the recorded repository baseline; no current deployment is implied
 
-**Dependency supply-chain posture:** YELLOW — the frozen graph has owner-gated advisory follow-up
+**Dependency supply-chain posture:** YELLOW: the frozen graph has owner-gated advisory follow-up
 
 **Overall merge readiness:** GREEN WITH DOCUMENTED DEFERRED RISK
 
@@ -128,7 +128,7 @@ dependency or lockfile change, or branch deletion. Each future action retains th
 - No automatic CMS-to-host rebuild, analytics, form processor, or server runtime is implemented by
   this archived reference.
 
-## Historical read-only provider audit — 2026-08-20
+## Historical read-only provider audit: 2026-08-20
 
 - GitHub showed the former source repository as private, with `main` selected and one production
   deployment record visible. The current reference repository is public at

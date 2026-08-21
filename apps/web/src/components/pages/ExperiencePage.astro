@@ -55,7 +55,7 @@ const chapters: readonly HomeJourneyChapter[] = experiences
     location: item.location?.[locale],
     dateLabel: [formatDate(item.startDate), formatDate(item.endDate)]
       .filter(Boolean)
-      .join(" — "),
+      .join(": "),
     summary: item.summary[locale],
     responsibilities: item.responsibilities.map((entry) => entry[locale]),
     achievements: item.achievements.map((entry) => entry[locale]),
@@ -70,7 +70,7 @@ const chapters: readonly HomeJourneyChapter[] = experiences
   fixedWorkspace
   metadata={{
     locale,
-    title: `${copy.title} — Portfolio Owner`,
+    title: `${copy.title}: Portfolio Owner`,
     description: copy.description,
     pathname,
     indexable: true,

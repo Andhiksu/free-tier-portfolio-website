@@ -10,8 +10,8 @@ accessibility requirements, and implementation constraints.
 
 ## Accepted visual contract
 
-- Use one dominant cinematic workspace shell with five primary destinations—Home, About,
-  Experience, Projects, and Credentials—rather than a long sequence of interchangeable card grids.
+- Use one dominant cinematic workspace shell with five primary destinations, Home, About,
+  Experience, Projects, and Credentials, rather than a long sequence of interchangeable card grids.
   Contact context remains within About; complete content uses dedicated localized routes.
 - Use mineral and graphite tones in light mode, and obsidian and charcoal tones in dark mode.
 - Keep navigation icon-first while preserving accessible names and clear active state.

@@ -1,4 +1,4 @@
-# AI-assisted one-run setup contract
+# AI assisted one run setup contract
 
 ## What the owner prepares
 

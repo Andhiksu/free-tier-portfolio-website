@@ -78,7 +78,7 @@ All notable changes to this project will be documented in this file.
 
 - Phase 5 claim, source authority, asset/evidence, and bounded publication-batch templates for
   privacy-safe real-content migration outside the public Sanity dataset.
-- Phase 5 Milestones 0–7, source precedence, claim lifecycle, localization, public contact/CV,
+- Phase 5 Milestones 0 to 7, source precedence, claim lifecycle, localization, public contact/CV,
   project mapping, future slug, bounded credential-category, rollback, and human-gate contracts.
 - A repository-only prelaunch deployment foundation: Node version pin, static Pages headers and
   redirect, crawler-disallow policy, contract tests, and a gated deployment/rollback runbook.
@@ -138,7 +138,7 @@ All notable changes to this project will be documented in this file.
   including frozen installation, the complete repository suite, schema and CMS boundary checks,
   tokenless CMS-backed and static-fallback builds, local Studio and browser smoke tests, responsive
   and accessibility inspection, dependency audit, privacy scans, and release-state verification.
-- Pushed the exact Milestones 2–5 checkpoint `9b9cf5819a03386cff6059eeb3178369f3b7683f`
+- Pushed the exact Milestones 2 to 5 checkpoint `9b9cf5819a03386cff6059eeb3178369f3b7683f`
   to `origin/phase/4-sanity-cms`; Phase 4 later completed and merged through PR #8.
 - Activated the existing public Sanity `production` dataset for local Studio authoring and static
   Astro builds while keeping production queries tokenless, draft-excluding, and explicitly on the

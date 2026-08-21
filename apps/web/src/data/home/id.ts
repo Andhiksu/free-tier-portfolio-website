@@ -7,7 +7,7 @@ import { getProjectPreviews } from "../projects.ts";
 
 export const idHomeData: HomePageData = {
   lang: "id",
-  title: "Portfolio Owner — Portofolio Data & AI Terapan",
+  title: "Portfolio Owner: Portofolio Data & AI Terapan",
   description:
     "Jelajahi arah portofolio Portfolio Owner dalam data, business intelligence, data science, dan AI terapan.",
   indexable: true,
@@ -207,6 +207,6 @@ export const idHomeData: HomePageData = {
     ],
   },
   footer: {
-    copy: "Portfolio Owner — Data, analitik, dan AI terapan.",
+    copy: "Portfolio Owner: Data, analitik, dan AI terapan.",
   },
 };

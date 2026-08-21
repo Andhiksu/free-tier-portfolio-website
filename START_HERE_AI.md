@@ -1,6 +1,6 @@
-# AI-Assisted One-Run Portfolio Setup
+# AI Assisted One Run Portfolio Setup
 
-This path is for a coding agent with filesystem and terminal access—not a chat window that cannot
+This path is for a coding agent with filesystem and terminal access, not a chat window that cannot
 operate on a repository.
 
 1. Use this repository as a GitHub template or clone it.

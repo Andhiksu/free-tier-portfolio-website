@@ -220,7 +220,7 @@ function adaptHomeData(
               summary: item.summary[locale],
               dateLabel: [formatDate(item.startDate), formatDate(item.endDate)]
                 .filter(Boolean)
-                .join(" — "),
+                .join(": "),
               skills: item.skills,
             })),
           }

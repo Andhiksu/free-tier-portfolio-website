@@ -9,14 +9,14 @@ const ownershipOptions = [
 
 const privacyOptions = [
   {title: 'Public-safe', value: 'public'},
-  {title: 'Review required — do not store in public dataset', value: 'reviewRequired'},
-  {title: 'Private — do not store in public dataset', value: 'private'},
+  {title: 'Review required: do not store in public dataset', value: 'reviewRequired'},
+  {title: 'Private: do not store in public dataset', value: 'private'},
 ]
 
 const redactionOptions = [
   {title: 'Not required', value: 'notRequired'},
   {title: 'Complete', value: 'complete'},
-  {title: 'Required — not publishable', value: 'required'},
+  {title: 'Required: not publishable', value: 'required'},
 ]
 
 const publicationFields = [

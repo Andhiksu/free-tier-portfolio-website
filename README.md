@@ -1,7 +1,7 @@
-# Free-Tier Portfolio Website Architecture
+# Free Tier Portfolio Website Architecture
 
 <p align="center">
-  <strong>Bring your story and assets. Let a coding assistant turn them into a verified portfolio—without paying for hosting.</strong>
+  <strong>Bring your story and assets. Let a coding assistant turn them into a verified portfolio, without paying for hosting.</strong>
 </p>
 
 <p align="center">
@@ -27,10 +27,10 @@
 I wanted this repository to be more useful than a finished portfolio screenshot. It is a practical
 starting point you can copy, fill with your own story and media, and publish as a bilingual static
 site on Cloudflare Pages. The default path works without a CMS account and is designed to stay
-inside current free-tier limits for a normal personal portfolio.
+inside current free tier limits for a normal personal portfolio.
 
-If you use a coding assistant, start with the one-run workflow below. You prepare the things only you
-can provide—your profile, public contact, projects, photos, and visual references—then the assistant
+If you use a coding assistant, start with the one run workflow below. You prepare the things only you
+can provide, your profile, public contact, projects, photos, and visual references, then the assistant
 does the repetitive setup, validation, build, and deployment preparation. You still approve logins,
 DNS, purchases, and publication. That keeps the workflow convenient without handing over sensitive
 decisions.
@@ -42,7 +42,7 @@ decisions.
 ## Jump to
 
 - [What this project demonstrates](#what-you-can-learn-from-it)
-- [AI-assisted one-run setup](#ai-assisted-one-run-setup)
+- [AI assisted one run setup](#ai-assisted-one-run-setup)
 - [Architecture](#architecture)
 - [Run it locally](#run-it-locally)
 - [Build and deployment model](#build-and-deployment-model)
@@ -54,21 +54,21 @@ decisions.
 
 <table aria-label="Technologies used by the portfolio starter">
   <tr>
-    <td align="center"><a href="https://astro.build/" title="Astro — static frontend"><img src="https://cdn.simpleicons.org/astro/FF5D01" alt="Astro logo" width="48" height="48" /><br /><sub><b>Astro</b></sub></a></td>
-    <td align="center"><a href="https://www.typescriptlang.org/" title="TypeScript — typed source"><img src="https://cdn.simpleicons.org/typescript/3178C6" alt="TypeScript logo" width="48" height="48" /><br /><sub><b>TypeScript</b></sub></a></td>
-    <td align="center"><a href="https://tailwindcss.com/" title="Tailwind CSS — styling"><img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="Tailwind CSS logo" width="48" height="48" /><br /><sub><b>Tailwind CSS</b></sub></a></td>
-    <td align="center"><a href="https://vite.dev/" title="Vite — build integration"><img src="https://cdn.simpleicons.org/vite/646CFF" alt="Vite logo" width="48" height="48" /><br /><sub><b>Vite</b></sub></a></td>
-    <td align="center"><a href="https://www.sanity.io/" title="Sanity Studio — optional CMS"><img src="https://cdn.simpleicons.org/sanity/F03E2F" alt="Sanity logo" width="48" height="48" /><br /><sub><b>Sanity Studio</b><br />optional</sub></a></td>
-    <td align="center"><a href="https://pages.cloudflare.com/" title="Cloudflare Pages — recommended delivery"><img src="https://cdn.simpleicons.org/cloudflare/F38020" alt="Cloudflare logo" width="48" height="48" /><br /><sub><b>Cloudflare Pages</b><br />recommended</sub></a></td>
+    <td align="center"><a href="https://astro.build/" title="Astro: static frontend"><img src="https://cdn.simpleicons.org/astro/FF5D01" alt="Astro logo" width="48" height="48" /><br /><sub><b>Astro</b></sub></a></td>
+    <td align="center"><a href="https://www.typescriptlang.org/" title="TypeScript: typed source"><img src="https://cdn.simpleicons.org/typescript/3178C6" alt="TypeScript logo" width="48" height="48" /><br /><sub><b>TypeScript</b></sub></a></td>
+    <td align="center"><a href="https://tailwindcss.com/" title="Tailwind CSS: styling"><img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="Tailwind CSS logo" width="48" height="48" /><br /><sub><b>Tailwind CSS</b></sub></a></td>
+    <td align="center"><a href="https://vite.dev/" title="Vite: build integration"><img src="https://cdn.simpleicons.org/vite/646CFF" alt="Vite logo" width="48" height="48" /><br /><sub><b>Vite</b></sub></a></td>
+    <td align="center"><a href="https://www.sanity.io/" title="Sanity Studio: optional CMS"><img src="https://cdn.simpleicons.org/sanity/F03E2F" alt="Sanity logo" width="48" height="48" /><br /><sub><b>Sanity Studio</b><br />optional</sub></a></td>
+    <td align="center"><a href="https://pages.cloudflare.com/" title="Cloudflare Pages: recommended delivery"><img src="https://cdn.simpleicons.org/cloudflare/F38020" alt="Cloudflare logo" width="48" height="48" /><br /><sub><b>Cloudflare Pages</b><br />recommended</sub></a></td>
   </tr>
 </table>
 
 Astro, TypeScript, Tailwind CSS, Vite, Node.js, and pnpm make up the local build. Cloudflare Pages is
-the recommended free static host. Sanity Studio is an optional content layer—not a requirement for
+the recommended free static host. Sanity Studio is an optional content layer, not a requirement for
 the starter to work. If a logo does not load, its accessible alt text and linked label still identify
 the technology.
 
-## AI-assisted one-run setup
+## AI assisted one run setup
 
 Here is the shortest path I designed for turning this reference into your own site:
 
@@ -134,7 +134,7 @@ adopting any service; this repository demonstrates portability, not permanent pr
 
 I learned a lot from building the original architecture, and I wanted to turn those lessons into a
 clean starting point that other people can actually use. This repository shows the trade-offs,
-content-safety model, fallback strategy, and operational steps—not just the polished page at the end.
+content-safety model, fallback strategy, and operational steps, not just the polished page at the end.
 
 ## What the build contains
 
@@ -290,42 +290,42 @@ demonstration deployment. I designed the following parts to be replaceable:
 > Start with the step-by-step [`docs/ADAPTATION_GUIDE.md`](docs/ADAPTATION_GUIDE.md), including its
 > identity audit, static-only/CMS choice, portable host contract, and pre-launch checklist.
 
-1. **Identity and routes** — Treat all included identity and portfolio content as historical sample
+1. **Identity and routes**: Treat all included identity and portfolio content as historical sample
    data. Replace the profile copy, contact paths, locale content,
    metadata, canonical origin, and route inventory. Keep English/Indonesian parity only if your
    project needs it.
-2. **Content contract** — Define your own Sanity schemas, dataset, publication rules, evidence
+2. **Content contract**: Define your own Sanity schemas, dataset, publication rules, evidence
    register, and localized fields. Keep published-only queries, runtime validation, and a safe
    fallback if the site must remain useful without CMS data.
-3. **Environment values** — Provide your own `SANITY_PROJECT_ID`, `SANITY_DATASET`, and
+3. **Environment values**: Provide your own `SANITY_PROJECT_ID`, `SANITY_DATASET`, and
    `SANITY_API_VERSION` in ignored build/Studio configuration. Do not copy historical IDs, tokens,
    provider URLs, or account settings into a new project.
-4. **Assets and claims** — Replace the reviewed example records and media with material you own or
+4. **Assets and claims**: Replace the reviewed example records and media with material you own or
    have permission to publish. Re-run source, ownership, privacy/redaction, alt text, credit, and
    publication review for every item.
-5. **Delivery** — Choose and configure your own host. Set the new repository and branch, build
+5. **Delivery**: Choose and configure your own host. Set the new repository and branch, build
    command (`pnpm build:web`), output directory (`apps/web/dist`), domain, and rollback process.
    If using Cloudflare Pages, create and configure a new project; the retired Pages project is not
    a template resource and no longer exists.
-6. **Operations** — Add only the integrations you can explain and verify end to end. This build did
+6. **Operations**: Add only the integrations you can explain and verify end to end. This build did
    not establish an automatic CMS webhook or server-side runtime; do not assume either exists in an
    adaptation.
 
 ## Documentation and historical context
 
-- [`docs/PROJECT_GUIDE.md`](docs/PROJECT_GUIDE.md) — stable architecture and contributor guide
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — diagrams, trust boundaries, and component model
-- [`docs/ADAPTATION_GUIDE.md`](docs/ADAPTATION_GUIDE.md) — fork-to-launch checklist for adopters
-- [`docs/AI_ONE_RUN_SETUP.md`](docs/AI_ONE_RUN_SETUP.md) — provider-neutral coding-agent contract
-- [`docs/HOSTING_AND_UPGRADE_PATHS.md`](docs/HOSTING_AND_UPGRADE_PATHS.md) — free baseline, domains,
+- [`docs/PROJECT_GUIDE.md`](docs/PROJECT_GUIDE.md): stable architecture and contributor guide
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md): diagrams, trust boundaries, and component model
+- [`docs/ADAPTATION_GUIDE.md`](docs/ADAPTATION_GUIDE.md): fork-to-launch checklist for adopters
+- [`docs/AI_ONE_RUN_SETUP.md`](docs/AI_ONE_RUN_SETUP.md): provider-neutral coding-agent contract
+- [`docs/HOSTING_AND_UPGRADE_PATHS.md`](docs/HOSTING_AND_UPGRADE_PATHS.md): free baseline, domains,
   and optional paid upgrades
-- [`docs/ENVIRONMENT_SETUP.md`](docs/ENVIRONMENT_SETUP.md) — local environment boundaries
-- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — historical hosting contract and provider boundary
-- [`docs/DISASTER_RECOVERY.md`](docs/DISASTER_RECOVERY.md) — recovery and rollback guidance
-- [`docs/GOVERNANCE.md`](docs/GOVERNANCE.md) — privacy, publication, and owner gates
-- [`docs/SANITIZATION.md`](docs/SANITIZATION.md) — placeholders and the public-data boundary
-- [`docs/PROGRESS.md`](docs/PROGRESS.md) — current archival status and historical baseline
-- [`docs/PHASE_LOG.md`](docs/PHASE_LOG.md) — chronological implementation evidence
+- [`docs/ENVIRONMENT_SETUP.md`](docs/ENVIRONMENT_SETUP.md): local environment boundaries
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md): historical hosting contract and provider boundary
+- [`docs/DISASTER_RECOVERY.md`](docs/DISASTER_RECOVERY.md): recovery and rollback guidance
+- [`docs/GOVERNANCE.md`](docs/GOVERNANCE.md): privacy, publication, and owner gates
+- [`docs/SANITIZATION.md`](docs/SANITIZATION.md): placeholders and the public-data boundary
+- [`docs/PROGRESS.md`](docs/PROGRESS.md): current archival status and historical baseline
+- [`docs/PHASE_LOG.md`](docs/PHASE_LOG.md): chronological implementation evidence
 
 Historical facts in these documents describe the former build at the time they were recorded.
 They are not guarantees about current provider state or instructions to change the replacement

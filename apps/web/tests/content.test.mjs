@@ -184,8 +184,8 @@ function createRecords() {
     siteSettings: {
       _id: "siteSettings",
       siteTitle: localized(
-        "Portfolio Owner — Data & Applied AI Portfolio",
-        "Portfolio Owner — Portofolio Data & AI Terapan",
+        "Portfolio Owner: Data & Applied AI Portfolio",
+        "Portfolio Owner: Portofolio Data & AI Terapan",
       ),
       siteDescription: localized(
         STATIC_CMS_FALLBACK.homeData.en.description,
